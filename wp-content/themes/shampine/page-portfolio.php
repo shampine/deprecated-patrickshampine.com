@@ -36,8 +36,13 @@ get_header(); ?>
 						</div>
 			
             <?php $count++; ?>
-            <?php if ($count==3 ||$portfolio_query->found_posts==0) : 
-            	echo '</div><div class="row-fluid row-portfolio">';
+            <?php 
+
+                if ($count===3 && $portfolio_query->found_posts>=1) : 
+                    echo '</div><div class="row-fluid row-portfolio">';
+                elseif ($count==3 && $portfolio_query->foundposts==0) :
+                    echo '</div>';
+
             ?>
             <?php $count=0; ?>
 			<?php endif; ?>
