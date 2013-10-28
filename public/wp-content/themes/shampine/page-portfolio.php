@@ -30,7 +30,7 @@ get_header(); ?>
 						<div class="span4">
 							<div class="portfolio-thumb">
 								<a href="<?php the_permalink(); ?>">
-								<?php echo get_the_post_thumbnail( $post_id, $attr ); ?>
+								<?php echo get_the_post_thumbnail(); ?>
 								<span class="portfolio-thumb-title"><p><?php the_title(); ?></p></span></a>	
 							</div>		
 						</div>

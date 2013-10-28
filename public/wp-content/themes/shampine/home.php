@@ -16,7 +16,7 @@
           </div>
       <!-- Post Thumbnail === Featured Image -->
           <div class="blog-content span4">
-            <span class="center blog-thumb"><a href="<?php the_permalink(); ?>"><?php echo get_the_post_thumbnail( $post_id, $attr ); ?></a></span>
+            <span class="center blog-thumb"><a href="<?php the_permalink(); ?>"><?php echo get_the_post_thumbnail(); ?></a></span>
           </div>
       </article>
       <?php endwhile; else: ?>

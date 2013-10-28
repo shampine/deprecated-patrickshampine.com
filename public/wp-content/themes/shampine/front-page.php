@@ -22,11 +22,12 @@
 		if ( $wp_query->have_posts() ) : ?>
 		<!-- Displays 3 most recent blog posts -->
 		<div class="row-fluid blog-content">
-		<?php while ( $wp_query->have_posts() ) : $wp_query->the_post(); ?>
+		<?php 
+			while ( $wp_query->have_posts() ) : $wp_query->the_post(); ?>
 			<div class="span4">
 				<div class="home-thumb">
 					<a href="<?php the_permalink(); ?>">
-					<?php echo get_the_post_thumbnail( $post_id, $attr ); ?>
+					<?php echo get_the_post_thumbnail(); ?>
 					<span class="home-thumb-title">
 						<p><?php the_title(); ?></p>
 					</span></a>	
