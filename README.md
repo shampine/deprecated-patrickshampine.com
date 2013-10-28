@@ -1,4 +1,4 @@
 patrickshampine.com
-===================
+==============
 
-Blog &amp; Portfolio
+Portfolio

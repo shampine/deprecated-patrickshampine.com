@@ -1,0 +1,9 @@
+User-Agent: *
+Sitemap: http://patrickshampine.com/sitemap_index.xml
+
+User-Agent: *
+Disallow: /dev/
+Disallow: /files/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins
