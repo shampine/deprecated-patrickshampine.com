@@ -14,8 +14,6 @@ if ( !is_admin() ) { // keeps scripts from loading to admin panel
 		wp_enqueue_script('bootstrap'); 
         wp_register_script('bootstrap-scrollspy', ( get_bloginfo('template_url') . '/js/bootstrap-scrollspy.js'), array('jquery')); 
 		wp_enqueue_script('bootstrap-scrollspy');
-		// wp_register_script('bootstrap-modal', ( get_bloginfo('template_url') . '/js/bootstrap-modal.js'), array('jquery')); 
-		// wp_enqueue_script('bootstrap-modal');
 		if ( is_page('contact') ) { // keeps script(s) to load only on specific page
 		wp_register_script('jquery-gmap', ( get_bloginfo('template_url') . '/js/jquery.gmap.js'), array('jquery')); 
 		wp_enqueue_script('jquery-gmap'); 
