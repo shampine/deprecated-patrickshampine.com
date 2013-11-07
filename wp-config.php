@@ -15,56 +15,56 @@
  */
 
 $default = array(
-        'name'     => 'default',
-        'hostname' => 'http://patrickshampine.com',
-        'debug'    => false,
-        'db_name'  => 'patrickshampine_com',
-        'db_user'  => 'patrickshampine',
-        'db_pass'  => 'wfVazNvJFV6KLM3S',
-        'db_host'  => 'localhost',
-        'password_protect' => false
+	'name'     => 'default',
+	'hostname' => 'http://patrickshampine.com',
+	'debug'    => false,
+	'db_name'  => 'patrickshampine_com',
+	'db_user'  => 'patrickshampine',
+	'db_pass'  => 'wfVazNvJFV6KLM3S',
+	'db_host'  => 'localhost',
+	'password_protect' => false
 );
 
 $local = array_merge($default, array(
-        'name'     => 'local',
-        'hostname' => 'http://patrickshampine.dev',
-        'debug'    => true,
+	'name'     => 'local',
+	'hostname' => 'http://patrickshampine.dev',
+	'debug'    => true,
 	'db_name'  => 'patrickshampine_dev',
-        'db_user'  => 'root',
-        'db_pass'  => 'password'
+	'db_user'  => 'root',
+	'db_pass'  => 'password'
 ));
 
 $staging = array_merge($default, array(
-        'name'     => 'staging',
-        'hostname' => 'http://dev.patrickshampine.com',
-        'debug'    => true,
+	'name'     => 'staging',
+	'hostname' => 'http://dev.patrickshampine.com',
+	'debug'    => true,
 	'db_name'  => 'dev_patrickshampine_com',
 	'password_protect'  => true
-		
+
 ));
 
 $production = array_merge($default, array(
-        'name'     => 'production',
+	'name'     => 'production',
 ));
 
 
-if ( file_exists( dirname( __FILE__ ) . '/env_local' ) ) {        
+if ( file_exists( dirname( __FILE__ ) . '/env_local' ) ) {
 
-        // Local Environment
-        $environment = $local;
+	// Local Environment
+	$environment = $local;
 
-} elseif ( file_exists( dirname( __FILE__ ) . '/env_staging' ) ) {        
-        
-        // Staging Environment
-        $environment = $staging;
-	
-        define('FS_METHOD', 'direct');
+} elseif ( file_exists( dirname( __FILE__ ) . '/env_staging' ) ) {
 
-} else {        
-        
-        // Production Environment
-        $environment = $production;
-	
+	// Staging Environment
+	$environment = $staging;
+
+	define('FS_METHOD', 'direct');
+
+} else {
+
+	// Production Environment
+	$environment = $production;
+
 	define('FS_METHOD', 'direct');
 	define('WP_CACHE', true);
 	define('WPCACHEHOME', '/var/www/tedtuthill.com/public/wp-content/plugins/wp-super-cache/');
@@ -133,7 +133,7 @@ define('WPLANG', '');
 
 /** Absolute path to the WordPress directory. */
 if ( !defined('ABSPATH') )
-        define('ABSPATH', dirname(__FILE__) . '/');
+	define('ABSPATH', dirname(__FILE__) . '/');
 
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');
