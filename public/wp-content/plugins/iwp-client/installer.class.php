@@ -222,7 +222,7 @@ class IWP_MMB_Installer extends IWP_MMB_Core
     function upgrade_core($current)
     {
         ob_start();
-        if (!function_exists('wp_version_check'))
+        if (!function_exists('wp_version_check') || !function_exists('get_core_checksums'))
             include_once(ABSPATH . '/wp-admin/includes/update.php');
         
         @wp_version_check();

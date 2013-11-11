@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=AW99E
 License: GPLv2 or later
 Tags: syntax highlighter, syntax, highlighter, highlighting, crayon, code highlighter, bbpress
 Requires at least: 3.0
-Tested up to: 3.5.1
+Tested up to: 3.7.0
 Stable tag: trunk
 
 Syntax Highlighter supporting multiple languages, themes, fonts, highlighting from a URL, local file or post text.
@@ -105,6 +105,7 @@ See the <a href="http://aramk.com/projects/crayon-language-file-specification/" 
 * Objective-C
 * Perl
 * PHP
+* PL/SQL
 * PostgreSQL (thanks to <a href="http://bitorchestra.com/" target="_blank">Bitorchestra</a>)
 * PowerShell
 * Python
@@ -189,6 +190,9 @@ A handful of articles from others written about Crayon, thanks guys!
 
 Thanks to all those who donate to the project:
 
+* Sohail Ahmed, (http://sohail.io.com/), USA
+* Vanessa Garcia Espin, Spain
+* Samad Malik, (http://samadmalik.com/), USA
 * Wabbit Wanch Design, (http://www.wabbitwanch.com/), Canada
 * Inopox Ltd, (http://inopox.com/), Cyprus
 * Kho Minh Vi, (http://khominhvi.com/), UK
@@ -197,7 +201,7 @@ Thanks to all those who donate to the project:
 * Saulius Stonys, Lithuania
 * Konstantin Sabel, Germany
 * Luigi Massa, (http://bwlab.it/), Italy
-* Anthony Steiner, (http://steinerd.com/), US
+* Anthony Steiner, (http://steinerd.com/), USA
 * Alexander Harvey, (http://alexharvey.eu/), UK
 * Minhazul Haque Shawon, Cyprus
 * Raam Dev, (http://raamdev.com/), USA
@@ -254,6 +258,17 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 5. Theme Editor.
 
 == Changelog ==
+
+= 2.4.2 =
+* ADDED:
+    * Cisco Router theme
+    * PL/SQL language thanks to https://github.com/Xophmeister
+    * Turnwall theme
+    * Iris Vfx theme
+    * bncplusplus theme
+* FIXED:
+	* Spans are no longer display:inline-block, which can cause spaces to disappear.
+	* ObjC improvements thanks to https://github.com/springsup
 
 = 2.4.1 =
 * ADDED:
