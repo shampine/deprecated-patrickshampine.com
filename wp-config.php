@@ -36,7 +36,7 @@ $local = array_merge($default, array(
 'debug'    => true,
 'db_name'  => 'patrickshampine_dev',
 'db_user'  => 'root',
-'db_pass'  => 'password'
+'db_pass'  => ''
 ));
 
 $staging = array_merge($default, array(
