@@ -18,7 +18,7 @@ sitemap.*
 sitemap.xml
 sitemap.xml.gz
 Thumbs.db
-/public/.htaccess
+public/.htaccess
 public/wp-content/advanced-cache.php
 public/wp-content/cache/
 public/wp-content/cache/*
