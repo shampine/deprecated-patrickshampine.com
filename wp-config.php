@@ -56,6 +56,7 @@ if ( file_exists( dirname( __FILE__ ) . '/env_local' ) ) {
 
 // Local Environment
 $environment = $local;
+define('FS_METHOD', 'direct');
 
 } elseif ( file_exists( dirname( __FILE__ ) . '/env_staging' ) ) {
 

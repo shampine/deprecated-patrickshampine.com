@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=AW99E
 License: GPLv2 or later
 Tags: syntax highlighter, syntax, highlighter, highlighting, crayon, code highlighter, bbpress
 Requires at least: 3.0
-Tested up to: 3.7.0
+Tested up to: 3.8.0
 Stable tag: trunk
 
 Syntax Highlighter supporting multiple languages, themes, fonts, highlighting from a URL, local file or post text.
@@ -111,6 +111,7 @@ See the <a href="http://aramk.com/projects/crayon-language-file-specification/" 
 * Python
 * R
 * Ruby
+* Rust (thanks to <a href="https://github.com/Stibbons" target="_blank">Stibbons</a>)
 * Scheme (thanks to <a href="https://github.com/harry75369" target="_blank">Harry75369</a>)
 * Shell (Unix)
 * Transact-SQL
@@ -133,7 +134,8 @@ See the <a href="http://aramk.com/projects/crayon-language-file-specification/" 
 * Lithuanian (thanks to <a href="http://www.host1free.com" target="_blank">Vincent G</a>)
 * Polish (thanks to <a href="https://github.com/toszcze" target="_blank">Bartosz Romanowski</a>)
 * Portuguese (thanks to <a href="http://www.adonai.eti.br" target="_blank">Adonai S. Canez</a>)
-* Slovak (thanks to Branco, <a href="http://webhostinggeeks.com/blog/">http://webhostinggeeks.com/</a>)
+* Slovak (thanks to Branco, <a href="http://webhostinggeeks.com/blog/" target="_blank">http://webhostinggeeks.com/</a>)
+* Slovenian (thanks to Jan Su&#353;nik, <a href="http://jodlajodla.si/" target="_blank">http://jodlajodla.si/</a>)
 * Spanish (thanks to <a href="http://www.hbravo.com/" target="_blank">Hermann Bravo</a>)
 * Russian (thanks to <a href="http://simplelib.com" target="_blank">Minimus</a> & <a href="http://atlocal.net/" target="_blank">Di_Skyer</a>)
 * Turkish (thanks to <a href="http://hakanertr.wordpress.com" target="_blank">Hakan</a>)
@@ -157,6 +159,7 @@ These are helpful for discovering new features.
 
 A handful of articles from others written about Crayon, thanks guys!
 
+* <a href="http://thedigitalhippies.com/digital/crayon-syntax-highlighter-plugin-theme-color-previews-demo/" target="_blank">Crayon Syntax Highlighter Plugin Theme Color Previews</a>
 * <a href="http://www.webworkgarage.com/2013/07/using-crayon-syntax-highlighter-wordpress-plugin-to-post-code-snippets-on-your-blog/" target="_blank">Using Crayon Syntax Highlighter WordPress plugin to post code snippets on your blog</a>
 * <a href="http://www.jjpro.net/2013/01/13/how-to-post-source-code-on-wordpress-2/" target="_blank">How to post source code on WordPress</a>
 * <a href="http://www.emanueleferonato.com/2013/02/01/syntax-highlighter-switched-to-crayon/" target="_blank">Syntax highlighter switched to Crayon</a>
@@ -237,9 +240,9 @@ Thanks to all those who donate to the project:
 
 * Download the .zip of the plugin and extract the contents.
 * Upload it to the Wordpress plugin directory and activate the plugin.
-* Even easier, just go to <strong>Plugins > Add New</strong> and search for "Crayon". 
+* Even easier, just go to <strong>Plugins > Add New</strong> and search for "Crayon".
 * You can change settings and view help under <strong>Settings > Crayon</strong> in the Wordpress Admin.
-* Make sure your theme either manually specifies jQuery, or uses the version shipped with Wordpress (recommended). You should NOT print out jQuery manually in the header as a script tag. <a href="http://wordpress.stackexchange.com/questions/1535/how-to-dequeue-a-script" target="_blank">Enqueueing it in Wordpresss</a> will prevent duplicate jQuery includes (also bad) and will allow other scripts to be placed AFTER jQuery in the head tag so they can use it. If you're uncertain, just let Wordpress handle it and remove any jQuery script tags you find in your theme's header.php. 
+* Make sure your theme either manually specifies jQuery, or uses the version shipped with Wordpress (recommended). You should NOT print out jQuery manually in the header as a script tag. <a href="http://wordpress.stackexchange.com/questions/1535/how-to-dequeue-a-script" target="_blank">Enqueueing it in Wordpresss</a> will prevent duplicate jQuery includes (also bad) and will allow other scripts to be placed AFTER jQuery in the head tag so they can use it. If you're uncertain, just let Wordpress handle it and remove any jQuery script tags you find in your theme's header.php.
 
 == Frequently Asked Questions ==
 
@@ -258,6 +261,15 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 5. Theme Editor.
 
 == Changelog ==
+
+= 2.4.3 =
+* ADDED:
+	* Slovenian language
+	* Coda Special Board theme
+    * Rust language
+    * Utilities for converting files containing lines into arrays or regex
+* FIXED:
+    * Prevented Google translate from affecting the code.
 
 = 2.4.2 =
 * ADDED:
@@ -482,7 +494,7 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 = 1.15 =
 * ADDED:
 	* The settings page no longer searches through all posts looking for legacy tags until you hit a new "refresh" button. Refreshing will look through all posts for crayon tags, and also mark any that are legacy tags. The same process occurs on an individual basis when saving a post.
-	* The settings page shows which posts contains legacy tags, and the buttons do not hide when showing the table. 
+	* The settings page shows which posts contains legacy tags, and the buttons do not hide when showing the table.
 	* Added theme information to the settings page
 	* Improved version updating
 	* Code in a new window loses size constraints
@@ -533,11 +545,11 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 = 1.12 =
 * Added ability to convert all legacy Crayon tags in blog posts and comments to &lt;pre&gt; tags, retaining all attributes. These are the accepted standard for the Tag Editor and they're backwards compatible (if Crayon is off or you're using another highlighter).
 * Added a button in the settings page to display the list of posts with Crayon tags
-* Fixed a bug causing posts with Crayon tags only in the comments (not the post content) to be ignored. 
+* Fixed a bug causing posts with Crayon tags only in the comments (not the post content) to be ignored.
 * Added Go Language
 * Added 4 new fonts suggested by <a href="http://andrealazzarotto.com/" target="_blank">Andrea Lazzarotto</a>
 * Added Ado theme thanks to <a href="http://adostudio.it/" target="_blank">adostudio.it</a>
-* Superfluous &lt;code&gt; tags wrapping around the code are removed 
+* Superfluous &lt;code&gt; tags wrapping around the code are removed
 * Fixed encoding bug in rss feeds, now takes decode setting into account
 * Fixed mixed highlighting + icon from showing all the time, only shows with mixed language code
 * Fixed a bug introduced in 1.11 that caused the page to scroll up to the top on refresh
@@ -554,7 +566,7 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 * Added Transact-SQL language
 * Added option to add blank lines before and after the code
 * Wrote a neat GeSHi language file scraper, makes it easier to scrape GeSHi files for grouped keywords and add them as Crayon languages
-* Added improved Spanish translation (thanks to <a href="http://www.hbravo.com/" target="_blank">Hermann Bravo</a>) 
+* Added improved Spanish translation (thanks to <a href="http://www.hbravo.com/" target="_blank">Hermann Bravo</a>)
 
 = 1.10.1 =
 * Added diff language thanks to <a href="http://omniavin.co/post/262" target="_blank">omniavin</a>
@@ -562,22 +574,22 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 * Added CSS class and white background to popup window
 * Removed noConflict() that was causing jQuery to fail on scripts that used $
 * Fixed an issue in the German translation causing "%gt;" (should be "&") to be recognised as an argument in printf.
-* The new method for using the wp_load.php path provided through a GET request from Crayon's js to its PHP should allow redefinitions WP directories in wp_config 
+* The new method for using the wp_load.php path provided through a GET request from Crayon's js to its PHP should allow redefinitions WP directories in wp_config
 
 = 1.10 =
 * Added Dutch translation thanks to <a href="https://twitter.com/#!/chilionsnoek">@chilionsnoek</a>.
 * Added Delphi/Pascal thanks to Chris McClenny (http://squashbrain.com/)
 * Added AppleScript
 * Language is automatically selected from the Tag Editor dropdown as you type a URL with an extension (e.g. typing "cs" would select "C#")
-* Fixed a preventing language being detected from extension  
+* Fixed a preventing language being detected from extension
 * Fixed a bug causing crayon:false to be ignored in the class tag
 * Cleaned up crayon's js so it's not possible to overwrite the jQuery instance
 * Fixed bug causing repeats of Crayon due to broken tags from using Mini Tags
 * Fixed isses with ignoring Mini Tags with $
-* Added Italian translation thanks to Federico Bellucci (http://www.federicobellucci.net/) 
+* Added Italian translation thanks to Federico Bellucci (http://www.federicobellucci.net/)
 
 = 1.9.12 =
-* Fixed a bug caused by unescaped HTML elements in the plain code breaking the page markup, reverted to escaped and uses the new sanitisation method. 
+* Fixed a bug caused by unescaped HTML elements in the plain code breaking the page markup, reverted to escaped and uses the new sanitisation method.
 
 = 1.9.11 =
 * Fixed an issue with IE 8 throwing JS errors for setStyleProperty
@@ -613,10 +625,10 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 
 = 1.9.4 =
 * Added /util/external_use.php for an example of how to use Crayon in other PHP environments.
-* Fixed issues with the excerpt, now Crayons are not stripped out by default, can be changed in Settings &gt; Misc. 
+* Fixed issues with the excerpt, now Crayons are not stripped out by default, can be changed in Settings &gt; Misc.
 * Fixed font-size issues that may conflict on some themes.
 * Crayons in comments now have their HTML entities decoded by default, specify "decode:false" in the class attr or decode="false" as an attr if you don't want it to decode.
-* Fixed a newline bug thanks to Eugene at http://iteye.ru/ 
+* Fixed a newline bug thanks to Eugene at http://iteye.ru/
 
 = 1.9.3 =
 * Added Perl
@@ -632,7 +644,7 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 
 = 1.9.1 =
 * Added Assembly (x86)
-* Standardised the toolbar buttons, now they use CSS spriting and have the same colour 
+* Standardised the toolbar buttons, now they use CSS spriting and have the same colour
 * Changed Theme CSS background to avoid conflicts with themes that affect TD tags
 * Fixed bug caused by discrepancies in how checkbox values were handled in Tag Editor
 * Fixed a bug causing $root variable to change on some setups, preventing tag editor from loading
@@ -643,7 +655,7 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 * Added ability to decode HTML entities, so now you can use &lt;, &gt; etc. in the Visual Editor. But if you need indentation etc, you'll want to use the HTML editor for posts with Crayons. You can also use decode="yes/no/true/false" to set this for an individual Crayon.
 * Added ability to decode attributes, which is enabled by default to avoid seeing encoded strings in the title, and also to allow encoded angle/square brackets in the title that would otherwise clash with the Crayon tag brackets if left unencoded.
 * Added ability to use the class attribute in &lt;pre&gt; tags for specifying settings like url, mark, lang, toolbar and all other valid settings like in a normal [crayon] tag. This will ensure your &lt;pre&gt; tags remain valid XHTML markup even with Crayon disabled.
-* Added ability to specify hyphen-separated-values in the class attribute of a &lt;pre&gt; tag to make them look like actual class selectors. E.g. &lt;pre class="lang-objc toolbar-false"&gt;...&lt;/pre&gt;. The setting name is made up of letters and hyphens ONLY, the value is whatever is left between the last hyphen and the next whitespace character.  
+* Added ability to specify hyphen-separated-values in the class attribute of a &lt;pre&gt; tag to make them look like actual class selectors. E.g. &lt;pre class="lang-objc toolbar-false"&gt;...&lt;/pre&gt;. The setting name is made up of letters and hyphens ONLY, the value is whatever is left between the last hyphen and the next whitespace character.
 * Added Scheme language thanks to https://github.com/harry75369
 * Added ABAP language with help from Christian Fein
 * Added a new setting: crayon="false/no/0" as an attribute or crayon:false in the class tag of a &lt;pre&gt;. This will ignore the &lt;pre&gt; tag and not turn it into a Crayon for those rare cases you don't want to use the plugin.
@@ -669,9 +681,9 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 * Fixed a bug causing content to be specified but not formatted for URLs with no code given
 * Fixed removing $ in font of ignored crayons like $&lt;pre...
 * Fixed js .style bugs in < IE 9
-* Cleaned up code for specifying attributes, NULL attributes are not passed as empty strings anymore. 
+* Cleaned up code for specifying attributes, NULL attributes are not passed as empty strings anymore.
 * The log looks cleaner now
-* Now crayons are replaced with [crayon-id/] in posts before being replaced with the actual Crayon 
+* Now crayons are replaced with [crayon-id/] in posts before being replaced with the actual Crayon
 * If js ever fails to load, it won't affect styling, just functionality
 * Added ability to use closed Mini Tags like [php ... \] when you're just giving a URL
 * Added lenient spaces for closed tags
@@ -725,7 +737,7 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 = 1.7.27 =
 * Recommended update for everyone. This fixes a bug in 1.7.25 where Mixed Highlighting would fail inside an html tag
 * Greatly simplified the mixed highlighting method, more robust
-* Made it impossible to nest delimiters, which mimics the behaviour in supported languages. 
+* Made it impossible to nest delimiters, which mimics the behaviour in supported languages.
 
 = 1.7.26 =
 * Added translations to the tooltips and copy notification in the toolbar
@@ -787,7 +799,7 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 * Improved handling of id's and names of resources.
 
 = 1.7.14 =
-* Fixed a bug that could potentially cause a PHP warning when reading the log when not permitted to do so. 
+* Fixed a bug that could potentially cause a PHP warning when reading the log when not permitted to do so.
 
 = 1.7.13 =
 * Fixed a bug causing my settings and donate links to be appended to all plugins in the list. Thanks to Ben.
@@ -810,7 +822,7 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 
 = 1.7.8 =
 * Fixed a JavaScript bug in admin preventing language list loading
-* Fixed an issue causing plain code to load invisible the first time if set to default view 
+* Fixed an issue causing plain code to load invisible the first time if set to default view
 * Added translations for 1.7.7 features
 
 = 1.7.7 =
@@ -834,7 +846,7 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 * Updated help in Settings and https://github.com/aramkocharyan/crayon-syntax-highlighter
 
 = 1.7.2 =
-* Fixed a bug that prevented foreign languages from being initialised and used. Thanks to @west_323 for finding it.  
+* Fixed a bug that prevented foreign languages from being initialised and used. Thanks to @west_323 for finding it.
 
 = 1.7.1 =
 * Renamed Japanese GNU language code from ja_JP to ja.
@@ -855,7 +867,7 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 * &lt;pre&gt;&lt;/pre&gt; tags are now captured as Crayons. This can be turned off in Settings > Crayon > Code.
 * You can remove prevent capturing individual &lt;pre&gt; tags the same way as Crayons: $&lt;pre&gt; ... &lt;/pre&gt;
 * This method of preventing the &lt;pre&gt; tag should be used if your code contains &lt;pre&gt; tags (nested &lt;pre&gt; tags) - otherwise it will cause conflicts.
-* Keep in mind that &lt;pre&gt; tags should not be editted in Visual Mode. Crayon will display all code as it appears in the HTML view of the post editor, where you can make code changes and use the tab key etc. If you want to use the Visual editor reguarly and are running into problems, consider loading the code form a file using the 'url' attribute. 
+* Keep in mind that &lt;pre&gt; tags should not be editted in Visual Mode. Crayon will display all code as it appears in the HTML view of the post editor, where you can make code changes and use the tab key etc. If you want to use the Visual editor reguarly and are running into problems, consider loading the code form a file using the 'url' attribute.
 * I have removed the ability to have spacing between the starting and ending square brackets, so [crayon...] is valid but [ crayon ... ] is not.
 The same applies to &lt;pre&gt; tags (not &lt; pre &gt;). The reason is to improve performance on posts without Crayons by using strpos and not regex functions like preg_match, and also it's better formed.
 * Fixed a bug causing Plain Code to display characters as encoded HTML entities
@@ -876,7 +888,7 @@ The same applies to &lt;pre&gt; tags (not &lt; pre &gt;). The reason is to impro
 * Added internationalisation with 4 new languages: German, Spanish, French and Italian
 * These were translated using Google Translate, so if you speak these languages and would like to improve them,
 it's actually quite easy to edit - just contact me via email :)
-* More languages will be added as they are demanded 
+* More languages will be added as they are demanded
 
 = 1.5.4 =
 * Recommended update for everyone
@@ -927,7 +939,7 @@ it's actually quite easy to edit - just contact me via email :)
 = 1.4.0 =
 * Added all other global settings for easy overriding: http://aramk.com/projects/crayon-settings/
 * Fixed issues with variables and entites in language regex
-* Added Epicgeeks theme made by Joe Newing of epicgeeks.net 
+* Added Epicgeeks theme made by Joe Newing of epicgeeks.net
 * Help updated
 * Fixed notice on missing jQuery string in settings
 * Reduced number of setting reads
@@ -939,7 +951,7 @@ it's actually quite easy to edit - just contact me via email :)
 * Removed some leftover code from popupWindow
 
 = 1.3.4 =
-* Added the ability to open the Crayon in an external window for Mobile devices, originally thought it wouldn't show popup  
+* Added the ability to open the Crayon in an external window for Mobile devices, originally thought it wouldn't show popup
 
 = 1.3.3 =
 * Added the ability to open the Crayon in an external window
@@ -949,7 +961,7 @@ it's actually quite easy to edit - just contact me via email :)
 
 = 1.3.1 =
 * This fixes an issue that was not completely fixed in 1.3.0:
-* Removed the lookbehind condition for escaping $ and \ for backreference bug 
+* Removed the lookbehind condition for escaping $ and \ for backreference bug
 
 = 1.3.0 =
 * Recommended upgrade for everyone.
@@ -993,7 +1005,7 @@ http://wordpress.org/support/topic/plugin-crayon-syntax-highlighter-this-plugin-
 = 1.1.0 =
 * Recommended upgrade for everyone running 1.0.3.
 * Fixes a bug that causes code become unhighlighted
-* Attribute names can be given in any case in shortcodes  
+* Attribute names can be given in any case in shortcodes
 * Fixes settings bug regarding copy constructor for locked settings
 * Minor bug fixes and cleanups
 
@@ -1012,5 +1024,5 @@ http://wordpress.org/support/topic/plugin-crayon-syntax-highlighter-this-plugin-
 
 == Upgrade Notice ==
 
-Make sure to upgrade to the latest release when possible to ensure you avoid bugs others have found and enjoy new features. 
+Make sure to upgrade to the latest release when possible to ensure you avoid bugs others have found and enjoy new features.
 
