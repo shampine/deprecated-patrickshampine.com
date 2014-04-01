@@ -1,40 +1,49 @@
 <?php get_header(); ?>
 
 <div class="full">
-	<div class="container">
-		<!-- Pulls content from "home" page in wp-admin -->
-		<div class="row-fluid blog-content">
-			<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-			<?php the_content(); ?>
-			<?php endwhile; else: ?>
-				<p><?php _e('Sorry, no pages matched your criteria.'); ?></p>
-			<?php endif; ?>
-		</div>
-		<!-- Pulls 3 most recent blog posts -->
-		<?php
-			$args = array(
-			    'post_type'      => 'post',
-			    'posts_per_page' => 3,
-			    'order'          => 'DESC',
-			    'orderby'        => 'ID',
-			);
-			$wp_query = new WP_Query( $args );
-		if ( $wp_query->have_posts() ) : ?>
-		<!-- Displays 3 most recent blog posts -->
-		<div class="row-fluid blog-content">
-		<?php 
-			while ( $wp_query->have_posts() ) : $wp_query->the_post(); ?>
-			<div class="span4">
-				<div class="home-thumb">
-					<a href="<?php the_permalink(); ?>">
-					<?php echo get_the_post_thumbnail(); ?>
-					<span class="home-thumb-title">
-						<p><?php the_title(); ?></p>
-					</span></a>	
-				</div>		
-			</div>
-				<?php endwhile; ?>
-				<?php endif; wp_reset_query(); ?>
+	<div class="container"><?php
+
+		$args = array(
+		    'post_type'      => 'post',
+		    'posts_per_page' => 6,
+		    'order'          => 'DESC',
+		    'orderby'        => 'ID',
+		);
+
+		$wp_query = new WP_Query( $args );
+		$count = 0;
+
+		if ( $wp_query->have_posts() ) :
+
+			echo '<div class="row-fluid blog-content">';
+
+			while ( $wp_query->have_posts() ) : $wp_query->the_post();
+
+				$permalink = get_permalink();
+				$thumb = get_the_post_thumbnail();
+				$title = get_the_title();
+
+				echo '
+					<div class="span4">
+						<div class="home-thumb">
+							<a href="'.$permalink.'">'.$thumb.'
+								<span class="home-thumb-title">
+									<p>'.$title.'</p>
+								</span>
+							</a>
+						</div>
+					</div>
+				';
+				
+				$count++;
+
+				if($count === 3 && $wp_query->have_posts() > 0) {
+					echo '</div><div class="row-fluid blog-content">';
+				}
+				
+				endwhile;
+				endif;
+				wp_reset_query(); ?>
 		</div>
 	</div>	
 </div>
