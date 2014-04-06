@@ -19,6 +19,7 @@ sitemap.xml
 sitemap.xml.gz
 Thumbs.db
 wp-config.php
+backups/
 public/.htaccess
 public/wp-content/advanced-cache.php
 public/wp-content/cache/
