@@ -40,7 +40,7 @@ get_header(); ?>
 
                 if ($count===3 && $portfolio_query->found_posts>=1) : 
                     echo '</div><div class="row-fluid row-portfolio">';
-                elseif ($count==3 && $portfolio_query->foundposts==0) :
+                elseif ($count==3 && $portfolio_query->found_posts==0) :
                     echo '</div>';
 
             ?>
