@@ -1,13 +1,13 @@
 <?php
-/**
+/*
 Template Name: Portfolio
- */
+*/
 
 get_header(); ?>
 
 <section class="single portfolio">
   <div class="container">
-    <div class="row-fluid section title">
+    <div class="row section title">
         <p class="intro">Evolve. Amplify. Heighten. Recent web projects.</p>
     </div>
       <?php wp_reset_query(); ?>
@@ -23,11 +23,11 @@ get_header(); ?>
         $portfolio_query = new WP_Query( $args );
       if ( $portfolio_query->have_posts() ) : ?>
 
-      <div class="row-fluid row-portfolio">
+      <div class="row row-portfolio">
         <?php $count=0; ?>  
         <?php while ( $portfolio_query->have_posts() ) : $portfolio_query->the_post(); ?>
 
-            <div class="span4">
+            <div class="col-md-4">
               <div class="portfolio-thumb">
                 <a href="<?php the_permalink(); ?>">
                 <?php echo get_the_post_thumbnail(); ?>

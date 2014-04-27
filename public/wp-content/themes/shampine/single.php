@@ -2,8 +2,8 @@
 
 <section class="single post">
   <div class="container">
-    <article class="row-fluid">
-      <div class="span12 title">
+    <article class="row">
+      <div class="col-md-10 col-md-offset-1 title">
       <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
       <h1><?php the_title(); ?></h1>
       <p style="text-align: center;"><em><?php the_time('l, F jS, Y'); ?></em></p>

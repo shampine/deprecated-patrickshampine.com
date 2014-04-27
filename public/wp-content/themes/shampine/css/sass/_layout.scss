@@ -10,7 +10,10 @@ body {
     border: none;
     div.navbar-header {
       button.navbar-toggle {
-
+        margin-top: 25px;
+        &:focus, &:hover {
+          background-color: darken(white, 5%);
+        }
       }
       a.navbar-brand {
         display: block;
@@ -23,6 +26,7 @@ body {
       }
     }
     div.navbar-collapse {
+      background-color: white;
       ul.navbar-nav {
         li {
           a {
@@ -33,6 +37,10 @@ body {
             &:hover {
               border-top: 12px solid $blue;
               padding-top: 18px;
+              @include breakpoint(max-med) {
+                border-top: 0px;
+                padding-top: 30px;
+              }
             }
           }
         }
@@ -55,12 +63,31 @@ body {
         }
       }
     }
+    &.portfolio {
+      div.portfolio-thumb {
+        a {
+          img {
+          width: 100%; 
+          height: auto;
+          }
+        }
+      }
+    }
+    &.contact {
+
+    }
     &.blog {
       div.blog-content {
         img {
           width: 100%;
           height: auto;
         }
+      }
+    }
+    &.post {
+      img {
+        width: 100%;
+        height: auto;
       }
     }
   }
