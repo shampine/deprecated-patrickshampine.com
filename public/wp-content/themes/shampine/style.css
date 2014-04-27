@@ -7,63 +7,65 @@ Author: Patrick Shampine
 Author URI: http://patrickshampine.com
 */
 
-@import url("/wp-content/themes/shampine/css/bootstrap.css");
-@import url("/wp-content/themes/shampine/css/bootstrap-responsive.css");
-@import url("/wp-content/themes/shampine/css/m-styles.css");
-@import url("/wp-content/themes/shampine/css/m-forms.css");
-@import url("/wp-content/themes/shampine/css/m-buttons.css");
-@import url("/wp-content/themes/shampine/css/m-icons.css");
+/*@import url("/wp-content/themes/shampine/css/bootstrap.css");*/
+/*@import url("/wp-content/themes/shampine/css/bootstrap-responsive.css");*/
+/*@import url("/wp-content/themes/shampine/css/m-styles.css");*/
+/*@import url("/wp-content/themes/shampine/css/m-forms.css");*/
+/*@import url("/wp-content/themes/shampine/css/m-buttons.css");*/
+/*@import url("/wp-content/themes/shampine/css/m-icons.css");*/
+
+@import url("/wp-content/themes/shampine/css/screen.css");
 
 * {
-	outline: none;
-	text-decoration: none;
+  outline: none;
+  text-decoration: none;
 }
 
 a {
-	color: #2185c5;
-	text-decoration: none;
-	outline: none;
+  color: #2185c5;
+  text-decoration: none;
+  outline: none;
 }
 
 a:hover {
-	color: #3e454c;
-	text-decoration: none;
+  color: #3e454c;
+  text-decoration: none;
 }
 
 .brand img {
-	box-shadow: 0 0px 0px rgba(0,0,0,0.0);
+  box-shadow: 0 0px 0px rgba(0,0,0,0.0);
 }
 
 img {
-	box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
 .nav {
-	text-align: center;
+  text-align: center;
 }
 
 .center {
-	display: block;
-	margin:0 auto;
- 	text-align: center;
+  display: block;
+  margin:0 auto;
+  text-align: center;
 }
 
 .title h1, h2 {
-	font-weight: 200;
-	text-align: center;
-	font-size: 3em;
-	color: #2185c5;
-	text-transform: uppercase;
-	line-height: 1em;
+  font-weight: 200;
+  text-align: center;
+  font-size: 3em;
+  color: #2185c5;
+  text-transform: uppercase;
+  line-height: 1em;
 }
 
 h3 {
-	font-size: 1.2em;
-	line-height: 36px;
+  font-size: 1.2em;
+  line-height: 36px;
 }
 
 strong, b {
-	font-weight: 600;
+  font-weight: 600;
 }
 
 em {
@@ -71,13 +73,13 @@ em {
 }
 
 .attachment .site-content {
-	margin: 0 auto;
+  margin: 0 auto;
     margin: .5em 0em .5em 0em;
     text-align: center;
 }
 
 .attachment p {
-	text-align: center;
+  text-align: center;
 }
 
 @media (min-width: 980px) {
@@ -90,124 +92,124 @@ em {
 /* Pages */
 
 .intro {
-	margin: 0 auto 1em; 
-	font-weight:100; 
-	font-size:200%; 
-	line-height:1; 
-	color:#6A6A6A; 
-	text-align: center;
+  margin: 0 auto 1em; 
+  font-weight:100; 
+  font-size:200%; 
+  line-height:1; 
+  color:#6A6A6A; 
+  text-align: center;
 }
 
 /* Home */
 
 .cta {
-	margin: 20px 0 5px 0;
+  margin: 20px 0 5px 0;
 }
 
 .home-thumb {
-	display: block;
-	position: relative;
-	margin: 0 auto 20px auto;
-	min-width: 230px;
-	min-height: 173px;
-	max-width: 370px;
-	max-height: 278px;
+  display: block;
+  position: relative;
+  margin: 0 auto 20px auto;
+  min-width: 230px;
+  min-height: 173px;
+  max-width: 370px;
+  max-height: 278px;
 }
 
 .home-thumb:hover {
-	opacity:0.8;
-	filter:alpha(opacity=80); /* For IE8 and earlier */
+  opacity:0.8;
+  filter:alpha(opacity=80); /* For IE8 and earlier */
 }
 
 .home-thumb-title {
-	display: block;
-	position: absolute;
-	overflow: hidden;
-	background-color: #2185c5;
-	width: 100%;
-	bottom: 0px;
-	height: 80px;
-	opacity:0.9;
-	filter:alpha(opacity=90); /* For IE8 and earlier */
+  display: block;
+  position: absolute;
+  overflow: hidden;
+  background-color: #2185c5;
+  width: 100%;
+  bottom: 0px;
+  height: 80px;
+  opacity:0.9;
+  filter:alpha(opacity=90); /* For IE8 and earlier */
 }
 
 .home-thumb-title p {
-	font-size: 20px;
-	font-weight: 300;
-	color: #ffffff;
-	text-align: right;
-	padding: 7px 10px 7px 10px;
+  font-size: 20px;
+  font-weight: 300;
+  color: #ffffff;
+  text-align: right;
+  padding: 7px 10px 7px 10px;
 }
 
 /* Blog */
 
 .post-title h1 {
-	font-weight: 200;
-	font-size: 2em;
-	color: #2185c5;
-	text-transform: uppercase;
-	line-height: 1em;
+  font-weight: 200;
+  font-size: 2em;
+  color: #2185c5;
+  text-transform: uppercase;
+  line-height: 1em;
 }
 
 .blog-content {
-	height: 100%;
-	margin-bottom: 45px;
+  height: 100%;
+  margin-bottom: 45px;
 }
 
 .blog-thumb:hover {
-	opacity:0.8;
-	filter:alpha(opacity=80); /* For IE8 and earlier */
+  opacity:0.8;
+  filter:alpha(opacity=80); /* For IE8 and earlier */
 }
 
 .nav-next {
-	float: right;
+  float: right;
 }
 
 .nav-previous {
-	float: left;
+  float: left;
 }
 
 /* Blog Post Content */
 
 .alignleft {
-	display: inline;
-	float: left;
+  display: inline;
+  float: left;
 }
 
 .aligncenter {
-	float: none;
-	text-align: center;
-	margin: 0 auto;
+  float: none;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .alignright {
-	display: inline;
-	float: right;
+  display: inline;
+  float: right;
 }
 
 .feature {
-	margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .blog-image-span4 {
-	min-width: 230px;
-	min-height: 173px;
-	max-width: 370px;
-	max-height: 278px;
-	margin-bottom: 15px;
+  min-width: 230px;
+  min-height: 173px;
+  max-width: 370px;
+  max-height: 278px;
+  margin-bottom: 15px;
 }
 
 img.alignright, .wp-caption.alignright {
-	margin: .5em 0em .5em 1em;
+  margin: .5em 0em .5em 1em;
 }
 
 img.alignleft, .wp-caption.alignright {
-	margin: .5em 1em .5em 0em;
+  margin: .5em 1em .5em 0em;
 }
 
 a img:hover {
-	opacity:0.9;
-	filter:alpha(opacity=90); /* For IE8 and earlier */
+  opacity:0.9;
+  filter:alpha(opacity=90); /* For IE8 and earlier */
 }
 
 video {
@@ -216,63 +218,63 @@ video {
 }
 
 .social {
-	float: left;
-	display: block;
-	width: 100%;
-	height: 100%;
-	margin: 10px 0 10px 0;
+  float: left;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 10px 0 10px 0;
 }
 
 .g-plusone {
-	width: 100px;
-	float: left;
-	display: block;
+  width: 100px;
+  float: left;
+  display: block;
 }
 
 .twitter {
-	float: left;
-	display: block;
+  float: left;
+  display: block;
 }
 
 /* Portfolio */
 
 .row-portfolio {
-	margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .portfolio-thumb {
-	display: block;
-	position: relative;
-	margin: 0 auto 20px auto;
-	min-width: 230px;
-	min-height: 173px;
-	max-width: 370px;
-	max-height: 278px;
+  display: block;
+  position: relative;
+  margin: 0 auto 20px auto;
+  min-width: 230px;
+  min-height: 173px;
+  max-width: 370px;
+  max-height: 278px;
 }
 
 .portfolio-thumb:hover {
-	opacity:0.8;
-	filter:alpha(opacity=80); /* For IE8 and earlier */
+  opacity:0.8;
+  filter:alpha(opacity=80); /* For IE8 and earlier */
 }
 
 .portfolio-thumb-title {
-	display: block;
-	position: absolute;
-	overflow: hidden;
-	background-color: #2185c5;
-	width: 100%;
-	bottom: 0px;
-	height: 80px;
-	opacity:0.9;
-	filter:alpha(opacity=90); /* For IE8 and earlier */
+  display: block;
+  position: absolute;
+  overflow: hidden;
+  background-color: #2185c5;
+  width: 100%;
+  bottom: 0px;
+  height: 80px;
+  opacity:0.9;
+  filter:alpha(opacity=90); /* For IE8 and earlier */
 }
 
 .portfolio-thumb-title p {
-	font-size: 20px;
-	font-weight: 300;
-	color: #ffffff;
-	text-align: right;
-	padding: 7px 10px 7px 10px;
+  font-size: 20px;
+  font-weight: 300;
+  color: #ffffff;
+  text-align: right;
+  padding: 7px 10px 7px 10px;
 }
 
 /* About */
@@ -280,19 +282,19 @@ video {
 /* Contact */
 
 #map {
-	height:300px; 
-	width:100%; 
-	margin-bottom:80px; 
-	position: relative; 
-	z-index:2000;
-	box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  height:300px; 
+  width:100%; 
+  margin-bottom:80px; 
+  position: relative; 
+  z-index:2000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
 .contact-icon {
-	margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .contact-icon:hover {
-	opacity:0.9;
-	filter:alpha(opacity=90); /* For IE8 and earlier */
+  opacity:0.9;
+  filter:alpha(opacity=90); /* For IE8 and earlier */
 }
