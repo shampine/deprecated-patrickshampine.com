@@ -1,22 +1,21 @@
 <?php get_header(); ?>
 
-<div class="full">
+<section class="single blog">
   <div class="container">
-    <div class="row-fluid section title">
-      <!-- <H1>Blog</H1> -->
+    <div class="row section title">
       <p class="intro">Thoughts neatly packaged into individual posts.<p>
     </div>
     <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-      <article class="row-fluid">
+      <article class="row">
       <!-- Title // Date // Excerpt // Read More --> 
-          <div class="post-title post-byline post-excerpt blog-content span8">
+          <div class="post-title post-byline post-excerpt blog-content col-md-8">
             <h1><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
             <p><em><?php the_time('F jS, Y'); ?></em></p>
             <?php the_excerpt(); ?><a class="m-btn small" href="<?php the_permalink(); ?>">Read More</a>
           </div>
       <!-- Post Thumbnail === Featured Image -->
-          <div class="blog-content span4">
-            <span class="center blog-thumb"><a href="<?php the_permalink(); ?>"><?php echo get_the_post_thumbnail(); ?></a></span>
+          <div class="blog-content col-md-4">
+            <span class="center blog-thumb"><a href="<?php the_permalink(); ?>"><?php echo get_the_post_thumbnail($post->ID, 'medium'); ?></a></span>
           </div>
       </article>
       <?php endwhile; else: ?>
@@ -28,6 +27,6 @@
         <div class="nav-next"><?php next_posts_link('<div class="m-btn big">Next &raquo;</div>') ?></div>
       </div>     
   </div>
-</div>
+</section>
 
 <?php get_footer(); ?>

@@ -17,10 +17,10 @@ $rgbapng_px_size: 1;
 @import "rgbapng";
 
 /* Bootstrap v3 */
-//@import "bootstrap";
-
+@import "bootstrap";
+@import "old";
 /* SCSS Modules */
 @import "typography";
 @import "colors";
-
+@import "layout";
 /* Custom Project Files */

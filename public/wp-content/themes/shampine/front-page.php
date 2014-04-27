@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<div class="full">
+<section class="single front-page">
   <div class="container"><?php
 
     $args = array(
@@ -15,16 +15,16 @@
 
     if ( $wp_query->have_posts() ) :
 
-      echo '<div class="row-fluid blog-content">';
+      echo '<div class="row blog-content">';
 
       while ( $wp_query->have_posts() ) : $wp_query->the_post();
 
         $permalink = get_permalink();
-        $thumb = get_the_post_thumbnail();
+        $thumb = get_the_post_thumbnail($post->ID, 'medium');
         $title = get_the_title();
 
         echo '
-          <div class="span4">
+          <div class="col-md-4">
             <div class="home-thumb">
               <a href="'.$permalink.'">'.$thumb.'
                 <span class="home-thumb-title">
@@ -38,14 +38,15 @@
         $count++;
 
         if($count === 3 && $wp_query->have_posts() > 0) {
-          echo '</div><div class="row-fluid blog-content">';
+          echo '</div><div class="row blog-content">';
         }
         
         endwhile;
         endif;
         wp_reset_query(); ?>
+
     </div>
   </div>  
-</div>
+</section>
 
 <?php get_footer(); ?>

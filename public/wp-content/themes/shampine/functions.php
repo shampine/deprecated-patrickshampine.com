@@ -1,5 +1,5 @@
 <?php
-// Password Protect Staging
+// Password Protect
 if( WP_PASSWORD_PROTECT == true ) {
   function password_protect() {
     if ( !is_user_logged_in() ) {
@@ -9,31 +9,38 @@ if( WP_PASSWORD_PROTECT == true ) {
   add_action ('template_redirect', 'password_protect');
 }
 
-// Loads Javascripts
-function scripts() {
-if ( !is_admin() ) { // keeps scripts from loading to admin panel
-  // Custom Scripts
-    wp_register_script('jqueryui', ( get_bloginfo('template_url') . '/js/jquery-ui-1.9.2.custom.min.js'), array('jquery'));
-    wp_enqueue_script('jqueryui'); 
-    wp_register_script('navigation', ( get_bloginfo('template_url') . '/js/navigation.js'), array('jquery')); 
-    wp_enqueue_script('navigation');
-    wp_register_script('youtube-resize', ( get_bloginfo('template_url') . '/js/youtube.resize.js'), array('jquery')); 
-    wp_enqueue_script('youtube-resize');
-    wp_register_script('bootstrap', ( get_bloginfo('template_url') . '/js/bootstrap.js'), array('jquery')); 
-    wp_enqueue_script('bootstrap'); 
-        wp_register_script('bootstrap-scrollspy', ( get_bloginfo('template_url') . '/js/bootstrap-scrollspy.js'), array('jquery')); 
-    wp_enqueue_script('bootstrap-scrollspy');
-    if ( is_page('contact') ) { // keeps script(s) to load only on specific page
-    wp_register_script('jquery-gmap', ( get_bloginfo('template_url') . '/js/jquery.gmap.js'), array('jquery')); 
-    wp_enqueue_script('jquery-gmap'); 
-    }
-    if ( is_page('contact') ) { // keeps script(s) to load only on specific page
-    wp_register_script('gmap', ( get_bloginfo('template_url') . '/js/gmap.js'), array('jquery')); 
-    wp_enqueue_script('gmap'); 
-    }
+// Google Analytics
+function googleAnalytics() {
+  global $environment;
+  if($environment['name'] === 'production') {
+    echo "
+    <script type=\"text/javascript\">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-32869524-2']);
+      _gaq.push(['_setDomainName', 'patrickshampine.com']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+    ";
   }
 }
-add_action( 'wp_print_scripts', 'scripts'); // now just run the function
+add_action('wp_head','googleAnalytics');
+
+// Loads Javascript
+function scripts() {
+if ( !is_admin() ) {
+    wp_register_script('jquery', ('http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'), array('jquery'));
+    wp_enqueue_script('jquery'); 
+    wp_register_script('main', ( get_bloginfo('template_url') . '/js/main.js'), array('jquery')); 
+    wp_enqueue_script('main');
+  }
+}
+add_action( 'wp_print_scripts', 'scripts');
 
 // Loads Sidebar
 if ( function_exists('register_sidebar') )
