@@ -5,7 +5,7 @@ Template Name: Portfolio-Single
 
 get_header(); ?>
 
-<div class="full">
+<section class="single portfolio-single">
   <div class="container">
     <div class="row-fluid section title row-portfolio">
       <H1><?php echo get_the_title(); ?> </H1>
@@ -17,6 +17,6 @@ get_header(); ?>
     </div>
     <a class="m-btn big" href="<?php echo get_permalink($post->post_parent) ?>" >&laquo; Return</a>
   </div>
-</div>
+</section>
 
 <?php get_footer(); ?>

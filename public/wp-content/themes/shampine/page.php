@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<div class="full">
+<section class="single page">
   <div class="container">
     <div class="row-fluid section title">
       <!-- <H1><?php echo get_the_title(); ?> </H1> -->
@@ -11,6 +11,6 @@
     <?php endif; ?>
     </div>
   </div>
-</div>
+</section>
 
 <?php get_footer(); ?>

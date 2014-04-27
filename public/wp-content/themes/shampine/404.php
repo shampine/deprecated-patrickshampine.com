@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<div class="full">
+<section class="single fourohfour">
     <div class="container">
       <div class="row-fluid">
       <div class="span12 title" style="margin-bottom: 50px;">
@@ -37,6 +37,6 @@
 
 
   </div>
-</div>
+</section>
 
 <?php get_footer(); ?>

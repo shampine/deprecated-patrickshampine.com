@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<div class="full">
+<section class="single index">
   <div class="container">
     <div class="row-fluid section title">
       <p class="intro"><?php the_title(); ?><p>
@@ -27,6 +27,6 @@
         <div class="nav-next"><?php next_posts_link('<div class="m-btn big">Next &raquo;</div>') ?></div>
       </div>     
   </div>
-</div>
+</section>
 
 <?php get_footer(); ?>

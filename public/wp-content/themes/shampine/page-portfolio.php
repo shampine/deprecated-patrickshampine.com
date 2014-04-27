@@ -5,7 +5,7 @@ Template Name: Portfolio
 
 get_header(); ?>
 
-<div class="full">
+<section class="single portfolio">
   <div class="container">
     <div class="row-fluid section title">
         <p class="intro">Evolve. Amplify. Heighten. Recent web projects.</p>
@@ -55,6 +55,6 @@ get_header(); ?>
           </div>
 
   </div>
-</div>
+</section>
 
 <?php get_footer(); ?>

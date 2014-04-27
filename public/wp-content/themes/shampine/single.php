@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<div class="full">
+<section class="single post">
   <div class="container">
     <article class="row-fluid">
       <div class="span12 title">
@@ -19,6 +19,6 @@
       </div>
     </article>
   </div>
-</div>
+</section>
 
 <?php get_footer(); ?>

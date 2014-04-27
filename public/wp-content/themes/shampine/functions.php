@@ -42,27 +42,23 @@ if ( !is_admin() ) {
 }
 add_action( 'wp_print_scripts', 'scripts');
 
-// Loads Sidebar
-if ( function_exists('register_sidebar') )
-  register_sidebar(array(
-    'before_widget' => '',
-    'after_widget' => '',
-    'before_title' => '<h3>',
-    'after_title' => '</h3>',
-  ));
+function googleMaps() {
+  if ( is_page('contact') ) { 
+    echo '<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>';
+  }
+}
+add_action('wp_head','googleMaps');
 
 // Removes ul class from wp_nav_menu
 function remove_ul ( $menu ){
-    return preg_replace( array( '#^<ul[^>]*>#', '#</ul>$#' ), '', $menu );
+    return preg_replace(array( '#^<ul[^>]*>#', '#</ul>$#' ), '', $menu);
 }
-add_filter( 'wp_nav_menu', 'remove_ul' );
+add_filter('wp_nav_menu', 'remove_ul');
 
 // Adds post thumbnails to theme
-add_theme_support( 'post-thumbnails' );      
+add_theme_support('post-thumbnails');      
 
 // Removes manifest from wp_head
 remove_action('wp_head', 'wlwmanifest_link');
 remove_action('wp_head', 'rsd_link');
-
-// Removes shortlink from header
-remove_action( 'wp_head', 'wp_shortlink_wp_head', 10, 0 );
+remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);

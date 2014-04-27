@@ -5,16 +5,9 @@
   <title><?php wp_title(); ?></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="p:domain_verify" content="46378d3c32c3c64b9e51ecf0f9ed9155"/>
-  <!-- Stylesheets -->
   <link href="/wp-content/themes/shampine/css/screen.css" rel="stylesheet">
-  <!-- Web Fonts -->  
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600' rel='stylesheet' type='text/css'>
-  <!-- Icons -->
   <link rel="shortcut icon" href="/wp-content/themes/shampine/img/favicon.png" />
-  <?php if ( is_page('contact') ) { echo '
-  <!-- Google Maps v3 -->
-  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-  '; } ?>
   <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>

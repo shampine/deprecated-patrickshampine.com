@@ -5,7 +5,7 @@ Template Name: Contact
 
 get_header(); ?>
 
-<div class="full">
+<section class="single contact">
   <div class="container">
     <div class="row-fluid section title">
       <!-- <H1><?php echo get_the_title(); ?> </H1> -->
@@ -44,6 +44,6 @@ get_header(); ?>
       </div>
     </div>    
   </div>
-</div>
+</section>
 
 <?php get_footer(); ?>

@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<div class="full">
+<section class="single attachment">
   <div class="container">
     <div class="row-fluid section title">
         <h1><?php the_title(); ?></h1>
@@ -17,6 +17,6 @@
     </div>
     <a class="m-btn big" href="<?php echo get_permalink($post->post_parent) ?>" >&laquo; Return</a>
   </div>
-</div>
+</section>
 
 <?php get_footer(); ?>
