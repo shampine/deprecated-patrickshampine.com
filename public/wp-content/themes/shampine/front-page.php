@@ -46,7 +46,7 @@
         wp_reset_query(); ?>
 
     </div>
-  </div>  
+  </div>
 </section>
 
 <?php get_footer(); ?>

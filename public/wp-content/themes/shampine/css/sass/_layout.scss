@@ -74,6 +74,12 @@ body {
       }
     }
     &.contact {
+      div.contact-icon {
+        a img {
+          width: 100%;
+          height: auto;
+        }
+      }
 
     }
     &.blog {
