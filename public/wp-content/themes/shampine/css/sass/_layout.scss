@@ -52,14 +52,26 @@ body {
     padding-top: 100px;
 
     &.front-page {
-      div.blog-content {
-        div.home-thumb {
+      div.post {
+        margin-top: 25px;
+        div.post-title {
+          height: 400px;
+          background-color: $salmon;
           a {
-            img {
-              width: 100%;
-              height: auto;
-            }
+            display: block;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            padding: 25px;
+            font-size: 1.5em;
+            color: white;
           }
+        }
+        div.post-image {
+          height: 400px;
+          padding: 0;
+          background-position: center;
+          @include background-size(cover);
         }
       }
     }

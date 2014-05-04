@@ -5,47 +5,34 @@
 
     $args = array(
         'post_type'      => 'post',
-        'posts_per_page' => 6,
+        'posts_per_page' => 1,
         'order'          => 'DESC',
         'orderby'        => 'ID',
     );
 
     $wp_query = new WP_Query( $args );
-    $count = 0;
 
     if ( $wp_query->have_posts() ) :
-
-      echo '<div class="row blog-content">';
-
       while ( $wp_query->have_posts() ) : $wp_query->the_post();
 
         $permalink = get_permalink();
-        $thumb = get_the_post_thumbnail($post->ID, 'medium');
-        $title = get_the_title();
+        $featured = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );
+        $title = get_the_title(); ?>
 
-        echo '
-          <div class="col-md-4">
-            <div class="home-thumb">
-              <a href="'.$permalink.'">'.$thumb.'
-                <span class="home-thumb-title">
-                  <p>'.$title.'</p>
-                </span>
-              </a>
-            </div>
+        <div class="row post">
+          <div class="col-md-3 post-title">
+            <a href="<?php echo $permalink; ?>"><?php echo $title; ?></a>
           </div>
-        ';
-        
-        $count++;
+          <div class="col-md-9 post-image" style="background-image:url('<?php echo $featured['0']; ?>')">
+          </div>
+        </div><?php
 
-        if($count === 3 && $wp_query->have_posts() > 0) {
-          echo '</div><div class="row blog-content">';
-        }
-        
         endwhile;
-        endif;
-        wp_reset_query(); ?>
 
-    </div>
+    endif;
+
+    wp_reset_query(); ?>
+
   </div>
 </section>
 
