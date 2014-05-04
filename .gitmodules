@@ -1,0 +1,6 @@
+[submodule "public/wp-content/plugins/awesomepress-gh"]
+	path = public/wp-content/plugins/awesomepress-gh
+	url = git@github.com:patrickshampine/awesomepress.git
+[submodule "public/wp-content/plugins/bootcodes"]
+	path = public/wp-content/plugins/bootcodes
+	url = git@github.com:patrickshampine/bootcodes.git
