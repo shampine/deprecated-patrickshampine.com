@@ -62,3 +62,8 @@ add_theme_support('post-thumbnails');
 remove_action('wp_head', 'wlwmanifest_link');
 remove_action('wp_head', 'rsd_link');
 remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);
+
+// Navigation Menu Array
+register_nav_menus( array(
+  'main' => 'Main Navigation'
+) );

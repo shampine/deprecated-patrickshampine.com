@@ -24,7 +24,7 @@
       </div>
       <div class="collapse navbar-collapse" id="navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
-          <?php wp_nav_menu(array('container' => 'false' )); ?>
+          <?php wp_nav_menu(array('container' => 'false')); ?>
         </ul>
       </div>
     </div>
