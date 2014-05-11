@@ -34,7 +34,7 @@ add_action('wp_head','googleAnalytics');
 // Loads Javascript
 function scripts() {
 if ( !is_admin() ) {
-    wp_register_script('jquery', ('http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'), array('jquery'));
+    wp_register_script('jquery', ('https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'), array('jquery'));
     wp_enqueue_script('jquery'); 
     wp_register_script('main', ( get_bloginfo('template_url') . '/js/main.js'), array('jquery')); 
     wp_enqueue_script('main');
@@ -44,7 +44,7 @@ add_action( 'wp_print_scripts', 'scripts');
 
 function googleMaps() {
   if ( is_page('contact') ) { 
-    echo '<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>';
+    echo '<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>';
   }
 }
 add_action('wp_head','googleMaps');
