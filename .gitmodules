@@ -4,3 +4,6 @@
 [submodule "public/wp-content/plugins/bootcodes"]
 	path = public/wp-content/plugins/bootcodes
 	url = git@github.com:patrickshampine/bootcodes.git
+[submodule "public/wp-content/plugins/gj-prefetch"]
+	path = public/wp-content/plugins/gj-prefetch
+	url = git@github.com:GunnJerkens/gj-prefetch.git
