@@ -9,7 +9,7 @@ get_header(); ?>
   <div class="container">
 
     <div class="row section title">
-        <p class="intro">Evolve. Amplify. Heighten. Recent web projects.</p>
+        <p class="intro">Portfolio.</p>
     </div><?php
 
     $portfolioRepeater = get_field('pf_repeater');

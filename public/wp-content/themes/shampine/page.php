@@ -2,13 +2,20 @@
 
 <section class="single page">
   <div class="container">
-    <div class="row section title">
-      <!-- <H1><?php echo get_the_title(); ?> </H1> -->
-    <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-      <?php the_content(); ?>
-    <?php endwhile; else: ?>
-      <p><?php _e('Sorry, no pages matched your criteria.'); ?></p>
-    <?php endif; ?>
+    <div class="row">
+      <div class="col-sm-12"><?php
+
+        if ( have_posts() ) : while ( have_posts() ) : the_post();
+
+          the_content();
+
+        endwhile; else:
+        
+          echo '<p>Sorry, no pages matched your criteria.</p>';
+
+        endif; ?>
+
+      </div>
     </div>
   </div>
 </section>

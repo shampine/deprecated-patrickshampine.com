@@ -8,18 +8,10 @@ get_header(); ?>
 <section class="single contact">
   <div class="container">
     <div class="row-fluid section title">
-      <!-- <H1><?php echo get_the_title(); ?> </H1> -->
       <p class="intro">Built in Los Angeles.</p>
-      <div class="container hidden-xs hidden-sm" id="map"> </div> <!-- Google Maps -->
+      <div class="container hidden-xs hidden-sm" id="map"> </div>
     </div>
     <div class="row">
-    <!--
-    <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-      <?php the_content(); ?>
-    <?php endwhile; else: ?>
-      <p><?php _e('Sorry, no pages matched your criteria.'); ?></p>
-    <?php endif; ?>
-    -->
     </div>
     <div class="row-fluid">
       <div class="col-md-3">
