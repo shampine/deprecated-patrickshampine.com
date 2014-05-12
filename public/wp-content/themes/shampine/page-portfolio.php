@@ -7,52 +7,51 @@ get_header(); ?>
 
 <section class="single portfolio">
   <div class="container">
+
     <div class="row section title">
         <p class="intro">Evolve. Amplify. Heighten. Recent web projects.</p>
-    </div>
-      <?php wp_reset_query(); ?>
-      <!-- Pulls 3 portfolio items in ascending order -->
-      <?php
-        $args = array(
-          'post_type'      => 'page',
-          'posts_per_page' => -1,
-          'post_parent'    => 94,
-          'order'          => 'DESC',
-          'orderby'        => 'ID',
-        );
-        $portfolio_query = new WP_Query( $args );
-      if ( $portfolio_query->have_posts() ) : ?>
+    </div><?php
 
-      <div class="row row-portfolio">
-        <?php $count=0; ?>  
-        <?php while ( $portfolio_query->have_posts() ) : $portfolio_query->the_post(); ?>
+    $portfolioRepeater = get_field('pf_repeater');
+    $count = 0;
 
-            <div class="col-md-4">
-              <div class="portfolio-thumb">
-                <a href="<?php the_permalink(); ?>">
-                <?php echo get_the_post_thumbnail(); ?>
-                <span class="portfolio-thumb-title"><p><?php the_title(); ?></p></span></a> 
-              </div>    
-            </div>
-      
-            <?php $count++; ?>
-            <?php 
+    foreach($portfolioRepeater as $portfolio) { 
 
-                if ($count===3 && $portfolio_query->found_posts>=1) : 
-                    echo '</div><div class="row-fluid row-portfolio">';
-                elseif ($count==3 && $portfolio_query->found_posts==0) :
-                    echo '</div>';
 
-            ?>
-            <?php $count=0; ?>
-      <?php endif; ?>
-          <?php endwhile; ?>
-          <?php else : ?>             
-              <h3>Sorry but there are no portfolio items.</h3>
-          <?php endif; ?>
-          <?php wp_reset_query(); ?>
-          
-          </div>
+    $browser = '
+      <div class="col-sm-8">
+        <div class="browser-nav"><ul><li></li><li></li><li></li></ul><span>'.$portfolio['pf_link'].'</span></div>
+        <div class="browser-body"><img src="'.$portfolio['pf_image']['url'].'" alt="'.$portfolio['pf_image']['alt'].'"></div>
+      </div>
+    ';
+    
+    $details = '
+      <div class="col-sm-4">
+        <h2>'.$portfolio['pf_title'].'</h2>
+        <p>'.$portfolio['pf_language'].'</p>
+        <p>'.$portfolio['pf_description'].'</p>
+        <a href="'.$portfolio['pf_link'].'" class="btn" target="_blank">View Project</a>
+      </div>
+    ';
+
+    $count++;
+
+    echo '<div class="row portfolio-item">';
+
+    if($count % 2 === 0){
+
+      echo $details.$browser;
+
+    } else {
+
+      echo $browser.$details;
+
+    }
+
+    echo '</div>';
+
+    } ?>
+
 
   </div>
 </section>
