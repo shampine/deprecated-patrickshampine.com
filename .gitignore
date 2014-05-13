@@ -32,16 +32,20 @@ public/wp-content/backup-db/*
 public/wp-content/blogs.dir/*
 public/wp-content/cache/*
 public/wp-content/cache/supercache/*
+public/wp-content/db.php
+public/wp-content/object-cache.php
 public/wp-content/plugins/acf-repeater/
 public/wp-content/plugins/acf-repeater/*
 public/wp-content/plugins/better-wp-security/
 public/wp-content/plugins/better-wp-security/*
 public/wp-content/plugins/wp-super-cache/
 public/wp-content/plugins/wp-super-cache/*
+public/wp-content/plugins/w3-total-cache/
 public/wp-content/upgrade/
 public/wp-content/upgrade/*
 public/wp-content/uploads/*
 public/wp-content/wp-cache-config.php
+public/wp-content/w3tc-config/
 
 # Include these files in previously blocked directories
 !public/wp-content/uploads/.htaccess
