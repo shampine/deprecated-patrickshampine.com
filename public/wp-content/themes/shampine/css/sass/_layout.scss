@@ -1,3 +1,85 @@
+* {
+  outline: none;
+  text-decoration: none;
+}
+
+a {
+  color: #2185c5;
+  text-decoration: none;
+  outline: none;
+}
+
+a:hover {
+  color: #3e454c;
+  text-decoration: none;
+}
+
+.brand img {
+  box-shadow: 0 0px 0px rgba(0,0,0,0.0);
+}
+
+.nav {
+  text-align: center;
+}
+
+.center {
+  display: block;
+  margin:0 auto;
+  text-align: center;
+}
+
+.title h1, h2 {
+  font-weight: 200;
+  text-align: center;
+  font-size: 3em;
+  color: #2185c5;
+  text-transform: uppercase;
+  line-height: 1em;
+}
+
+h3 {
+  font-size: 1.2em;
+  line-height: 36px;
+}
+
+strong, b {
+  font-weight: 600;
+}
+
+em {
+  font-style: italic;
+}
+
+.attachment .site-content {
+  margin: 0 auto;
+    margin: .5em 0em .5em 0em;
+    text-align: center;
+}
+
+.attachment p {
+  text-align: center;
+}
+
+@media (min-width: 980px) {
+  .anchor {
+    padding-top: 95px;
+    margin-top: -95px;
+  }
+}
+
+/* Pages */
+
+.intro {
+  margin: 0 auto 1em; 
+  font-weight:100; 
+  font-size:200%; 
+  line-height:1; 
+  color:#6A6A6A; 
+  text-align: center;
+}
+
+// New Styles
+
 body {
 
   nav.navbar {
@@ -198,14 +280,78 @@ body {
           height: auto;
         }
       }
-
+      #map {
+        height:300px; 
+        width:100%; 
+        margin-bottom:80px; 
+        position: relative; 
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      }
+      .contact-icon {
+        margin-bottom: 15px;
+      }
+      .contact-icon:hover {
+        opacity:0.9;
+      }
     }
 
     &.post {
-      img {
+
+      // Utility
+      .alignleft {
+        display: inline;
+        float: left;
+      }
+      .aligncenter {
+        float: none;
+        text-align: center;
+        margin: 0 auto;
+      }
+      .alignright {
+        display: inline;
+        float: right;
+      }
+      .feature {
+        margin-bottom: 15px;
+      }
+      .blog-image-span4 {
+        min-width: 230px;
+        min-height: 173px;
+        max-width: 370px;
+        max-height: 278px;
+        margin-bottom: 15px;
+      }
+      img.alignright, .wp-caption.alignright {
+        margin: .5em 0em .5em 1em;
+      }
+      img.alignleft, .wp-caption.alignright {
+        margin: .5em 1em .5em 0em;
+      }
+      a img:hover {
+        opacity:0.9;
+        filter:alpha(opacity=90); /* For IE8 and earlier */
+      }
+      video {
+        width: 100% !important;
+        height: auto !important;
+      }
+      .social {
+        float: left;
+        display: block;
         width: 100%;
-        height: auto;
+        height: 100%;
+        margin: 10px 0 10px 0;
+      }
+      .g-plusone {
+        width: 100px;
+        float: left;
+        display: block;
+      }
+      .twitter {
+        float: left;
+        display: block;
       }
     }
+
   }
 }
