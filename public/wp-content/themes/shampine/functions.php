@@ -64,6 +64,8 @@ remove_action('wp_head', 'rsd_link');
 remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);
 
 // Navigation Menu Array
-register_nav_menus( array(
+register_nav_menus(array(
   'main' => 'Main Navigation'
-) );
+));
+
+add_image_size('homepage', 600, 400, true );

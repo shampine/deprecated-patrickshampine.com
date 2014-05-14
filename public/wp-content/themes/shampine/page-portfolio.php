@@ -17,16 +17,22 @@ get_header(); ?>
 
     foreach($portfolioRepeater as $portfolio) { 
 
+    $count++;
+    $even = false;
+
+    if($count % 2 === 0) {
+      $even = true;
+    }
 
     $browser = '
-      <div class="col-sm-8">
+      <div class="col-sm-8 '.($even ? '' : 'col-sm-pull-4').'">
         <div class="browser-nav"><ul><li></li><li></li><li></li></ul><span>'.$portfolio['pf_link'].'</span></div>
         <div class="browser-body"><img src="'.$portfolio['pf_image']['url'].'" alt="'.$portfolio['pf_image']['alt'].'"></div>
       </div>
     ';
     
     $details = '
-      <div class="col-sm-4">
+      <div class="col-sm-4 '.($even ? '' : 'col-sm-push-8').'">
         <h2>'.$portfolio['pf_title'].'</h2>
         <p>'.$portfolio['pf_language'].'</p>
         <p>'.$portfolio['pf_description'].'</p>
@@ -34,21 +40,11 @@ get_header(); ?>
       </div>
     ';
 
-    $count++;
-
-    echo '<div class="row portfolio-item">';
-
-    if($count % 2 === 0){
-
-      echo $details.$browser;
-
-    } else {
-
-      echo $browser.$details;
-
-    }
-
-    echo '</div>';
+    echo '
+      <div class="row portfolio-item">
+        '.$details.$browser.'
+      </div>
+    ';
 
     } ?>
 
