@@ -14,3 +14,13 @@ body {
 h1,h2,h3,h4,h5,h6,a,p,li {
   @include sans;
 }
+
+.btn {
+  color: $blue;
+  border: 2px solid $blue;
+  font-size: 1.1em;
+  &:hover {
+    color: white;
+    background-color: $blue;
+  }
+}

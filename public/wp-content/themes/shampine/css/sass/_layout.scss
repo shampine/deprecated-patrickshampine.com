@@ -132,6 +132,7 @@ body {
 
   section.single {
     padding-top: 100px;
+    padding-bottom: 50px;
 
     &.blog {
       article {
@@ -175,15 +176,6 @@ body {
           display: block;
           width: 100%;
           height: 100%;
-        }
-        div.btn {
-          color: $blue;
-          border: 1px solid $blue;
-          font-size: 1.1em;
-          &:hover {
-            color: white;
-            background-color: $blue;
-          }
         }
         .nav-next {
           float: right;
@@ -296,6 +288,10 @@ body {
     }
 
     &.post {
+      img {
+        max-width: 100%;
+        height: auto;
+      }
 
       // Utility
       .alignleft {
@@ -350,6 +346,36 @@ body {
       .twitter {
         float: left;
         display: block;
+      }
+    }
+
+    &.attachment {
+      div.section {
+        padding-bottom: 25px;
+        div.attachment {
+          border: 5px black;
+          span.center {
+            img {
+              width: auto;
+              max-width: 100%;
+              height: auto;
+            }
+          }
+        }
+      }
+    }
+
+    &.fourohfour {
+      div.home-thumb {
+        img {
+          width: 100%;
+          height: auto;
+        }
+        span.home-thumb-title {
+          p {
+            text-align: center;
+          }
+        }
       }
     }
 

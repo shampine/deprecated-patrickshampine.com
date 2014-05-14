@@ -2,7 +2,7 @@
 
 <section class="single attachment">
   <div class="container">
-    <div class="row-fluid section title">
+    <div class="row section title">
         <h1><?php the_title(); ?></h1>
         <p style="text-align: center;"><em><?php the_time('l, F jS, Y'); ?></em></p>
       <div class="attachment">
@@ -15,7 +15,7 @@
         <?php endif; ?>
       </div>
     </div>
-    <a class="m-btn big" href="<?php echo get_permalink($post->post_parent) ?>" >&laquo; Return</a>
+    <a class="btn" href="<?php echo get_permalink($post->post_parent) ?>" >&laquo; Return</a>
   </div>
 </section>
 
