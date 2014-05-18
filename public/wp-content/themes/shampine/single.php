@@ -4,8 +4,9 @@
   <div class="container"><?php 
 
     if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-      <article class="row">
-        <div class="col-md-12 title"><?php
+      <div class="row">
+        <div class="col-md-12">
+          <article><?php
         
           $masthead = get_field('masthead');
 
@@ -13,15 +14,17 @@
             echo '<div class="masthead"><img src="'.$masthead['url'].'" alt="'.$masthead['alt'].'" style="width:100%;height:auto;"></div>';
           }
 
-          echo '<h1>'.get_the_title().'</h1>';
+          echo '<h1 class="post-title">'.get_the_title().'</h1>';
 
-          echo '<p class="aligncenter"><em>'.get_the_time('l, F jS, Y').'</em></p>';
+          echo '<p class="post-date"><em>'.get_the_time('l, F jS, Y').'</em></p>';
           
-          the_content(); 
+          echo '<div class="post-content">'.get_the_content().'</div>';
 
           // gallery? ?>
 
-      </article>
+          </article>
+        </div>
+      </div>
 
       <section class="social">
         <div class="g-plusone" data-size="medium"></div>

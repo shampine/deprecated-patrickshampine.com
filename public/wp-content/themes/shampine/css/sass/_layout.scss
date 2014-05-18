@@ -295,8 +295,23 @@ body {
           height: auto;
         }
       }
-      h1 {
+      h1.post-title {
+        padding: 15px 0px 0px;
+        color: $blue;
+        text-align: center;
+        font-weight: 300;
         font-size: 2em;
+      }
+      p.post-date {
+        display: block;
+        margin: 0 auto;
+        padding-bottom: 15px;
+        border-bottom: 1px dotted $grey;
+        text-align: center;
+      }
+      div.post-content {
+        padding-top: 25px;
+        padding-bottom: 25px;
       }
       article {
         margin-bottom: 25px;
