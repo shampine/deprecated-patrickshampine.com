@@ -410,4 +410,51 @@ body {
     }
 
   }
+
+  footer {
+    nav {
+      p.copy {
+        margin-left: -15px;
+        text-align: left;
+        a {
+          color: #333;
+          &:hover {
+            color: $blue;
+          }
+        }
+      }
+      ul.social {
+        display: inline-block;
+        height: 30px;
+        margin-right: -15px;
+        padding: 0;
+        float: right;
+        @include breakpoint(max-small) {
+          float: none;
+          margin: 0 auto;
+          text-align: center;
+        }
+        i.fa {
+          font-size: 1.8em;
+        }
+        li {
+          display: inline;
+          float: left;
+          padding: 5px;
+          @include breakpoint(max-small) {
+            float: none;
+          }
+          a {
+            color: #333;
+            font-size: .75em;
+            &:hover {
+              color: $blue;
+            }
+          }
+        }
+      }
+
+    }
+  }
+
 }
