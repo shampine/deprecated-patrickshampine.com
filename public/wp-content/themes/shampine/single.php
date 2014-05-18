@@ -19,7 +19,7 @@
           echo '<p class="post-date"><em>'.get_the_time('l, F jS, Y').'</em></p>';
           
           echo '<div class="post-content">';
-            the_content()
+            the_content();
           echo '</div>';
 
           // gallery? ?>
