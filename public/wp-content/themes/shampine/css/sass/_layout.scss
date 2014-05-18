@@ -90,6 +90,7 @@ body {
     background-color: white;
     border-radius: 0;
     border: none;
+    z-index: 8675310;
     div.navbar-header {
       button.navbar-toggle {
         margin-top: 25px;
@@ -288,6 +289,20 @@ body {
     }
 
     &.post {
+      div.masthead {
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+      h1 {
+        font-size: 2em;
+      }
+      article {
+        margin-bottom: 25px;
+        padding-bottom: 25px;
+        border-bottom: 1px dotted $grey;
+      }
       img {
         max-width: 100%;
         height: auto;
