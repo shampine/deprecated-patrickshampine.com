@@ -1,4 +1,7 @@
 <?php
+
+include('inc/assets.php');
+
 // Password Protect
 if( WP_PASSWORD_PROTECT == true ) {
   function password_protect() {
@@ -31,24 +34,6 @@ function googleAnalytics() {
 }
 add_action('wp_head','googleAnalytics');
 
-// Loads Javascript
-function scripts() {
-if ( !is_admin() ) {
-    wp_register_script('jquery', ('https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'), array('jquery'));
-    wp_enqueue_script('jquery'); 
-    wp_register_script('main', ( get_bloginfo('template_url') . '/js/main.js'), array('jquery')); 
-    wp_enqueue_script('main');
-  }
-}
-add_action( 'wp_print_scripts', 'scripts');
-
-function googleMaps() {
-  if ( is_page('contact') ) { 
-    echo '<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>';
-  }
-}
-add_action('wp_head','googleMaps');
-
 // Removes ul class from wp_nav_menu
 function remove_ul ( $menu ){
     return preg_replace(array( '#^<ul[^>]*>#', '#</ul>$#' ), '', $menu);
@@ -62,6 +47,7 @@ add_theme_support('post-thumbnails');
 remove_action('wp_head', 'wlwmanifest_link');
 remove_action('wp_head', 'rsd_link');
 remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);
+remove_action('wp_head', 'wp_generator');
 
 // Navigation Menu Array
 register_nav_menus(array(
