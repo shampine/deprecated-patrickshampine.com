@@ -416,6 +416,9 @@ body {
       p.copy {
         margin-left: -15px;
         text-align: left;
+        @include breakpoint(max-small) {
+          text-align: center;
+        }
         a {
           color: #333;
           &:hover {
@@ -424,7 +427,7 @@ body {
         }
       }
       ul.social {
-        display: inline-block;
+        display: block;
         height: 30px;
         margin-right: -15px;
         padding: 0;
