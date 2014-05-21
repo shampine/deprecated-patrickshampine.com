@@ -7,3 +7,6 @@
 [submodule "public/wp-content/plugins/gj-prefetch"]
 	path = public/wp-content/plugins/gj-prefetch
 	url = git@github.com:GunnJerkens/gj-prefetch.git
+[submodule "bin"]
+	path = bin
+	url = git@github.com:StartupAndPlay/server-scripts.git
