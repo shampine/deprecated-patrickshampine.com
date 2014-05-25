@@ -10,3 +10,6 @@
 [submodule "bin"]
 	path = bin
 	url = git@github.com:StartupAndPlay/server-scripts.git
+[submodule "public/wp-content/plugins/wordgun"]
+	path = public/wp-content/plugins/wordgun
+	url = git@github.com:patrickshampine/wordgun.git

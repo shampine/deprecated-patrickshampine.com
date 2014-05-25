@@ -7,34 +7,23 @@ get_header(); ?>
 
 <section class="single contact">
   <div class="container">
-    <div class="row-fluid section title">
+    <div class="row section title">
       <p class="intro">Built in Los Angeles.</p>
       <div class="container hidden-xs hidden-sm" id="map"> </div>
     </div>
     <div class="row">
-    </div>
-    <div class="row-fluid">
-      <div class="col-md-3">
-        <div class="contact-icon center">
-          <a href="mailto:patrick@patrickshampine.com"><img src="/wp-content/themes/shampine/img/contact-email.png" alt="Patrick Shampine Email" /></a> 
-        </div>    
+      <div class="col-sm-8 contact-form">
+        <?php the_content(); ?>
       </div>
-      <div class="col-md-3">
-        <div class="contact-icon center">
-          <a href="https://plus.google.com/101946159124570139670/" target="_blank"><img src="/wp-content/themes/shampine/img/contact-googleplus.png" alt="Patrick Shampine Google+" /></a>  
-        </div>    
+      <div class="col-sm-4 contact-social">
+        <ul>
+          <li><a href="https://github.com/patrickshampine" target="_blank"><i class="fa fa-github-square"></i><span>GitHub</span></a></li>
+          <li><a href="https://twitter.com/patrickshampine" target="_blank"><i class="fa fa-twitter-square"></i><span>Twitter</span></a></li>
+          <li><a href="https://plus.google.com/+PatrickShampine/" target="_blank"><i class="fa fa-google-plus-square"></i><span>Google+</span></a></li>
+          <li><a href="https://www.linkedin.com/in/patrickshampine" target="_blank"><i class="fa fa-linkedin-square"></i><span>LinkedIn</span></a></li>
+        </ul>
       </div>
-      <div class="col-md-3">
-        <div class="contact-icon center">
-          <a href="https://www.linkedin.com/in/patrickshampine/" target="_blank"><img src="/wp-content/themes/shampine/img/contact-linkedin.png" alt="Patrick Shampine LinkedIn" /></a> 
-        </div>    
-      </div>
-      <div class="col-md-3">
-        <div class="contact-icon center">
-          <a href="https://twitter.com/patrickshampine" target="_blank"><img src="/wp-content/themes/shampine/img/contact-twitter.png" alt="Patrick Shampine Twitter" /></a>  
-        </div>    
-      </div>
-    </div>    
+    </div>  
   </div>
 </section>
 
