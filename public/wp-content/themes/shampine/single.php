@@ -45,6 +45,8 @@
           } ?>
           <h3>Categories</h3>
           <?php echo get_the_category_list(); ?>
+          <h3>Hosting</h3>
+          <a href="https://www.digitalocean.com/?refcode=d6cadd6345fb" class="do" target="_blank"><img src="/wp-content/themes/shampine/img/digital-ocean-hosting.png" alt="Digital Ocean" title="Digital Ocean"></a>
         </aside>
       </div><?php
 

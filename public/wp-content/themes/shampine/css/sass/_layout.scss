@@ -14,10 +14,6 @@ a:hover {
   text-decoration: none;
 }
 
-.brand img {
-  box-shadow: 0 0px 0px rgba(0,0,0,0.0);
-}
-
 .nav {
   text-align: center;
 }
@@ -337,73 +333,92 @@ body {
         border-bottom: 1px dotted $grey;
         text-align: center;
       }
-      div.post-content {
-        padding-top: 25px;
-        padding-bottom: 25px;
-      }
       article {
         margin-bottom: 25px;
         padding-bottom: 25px;
-        border-bottom: 1px dotted $grey;
+        div.post-content {
+          padding-top: 25px;
+          padding-bottom: 25px;
+        }
+        // Post Utility Classes
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+        .alignleft {
+          display: inline;
+          float: left;
+        }
+        .aligncenter {
+          float: none;
+          text-align: center;
+          margin: 0 auto;
+        }
+        .alignright {
+          display: inline;
+          float: right;
+        }
+        .feature {
+          margin-bottom: 15px;
+        }
+        img.alignright, .wp-caption.alignright {
+          margin: .5em 0em .5em 1em;
+        }
+        img.alignleft, .wp-caption.alignright {
+          margin: .5em 1em .5em 0em;
+        }
+        a img:hover {
+          opacity:0.9;
+        }
+        video {
+          width: 100% !important;
+          height: auto !important;
+        }
       }
-      img {
-        max-width: 100%;
-        height: auto;
+      aside.sidebar {
+        h3 {
+          text-align: center;
+        }
+        ul.post-categories{
+          list-style: none;
+          padding: 0;
+          li {
+            text-align: center;
+          }
+        }
+        .do {
+          display: block;
+          width: 100%;
+          height: 100%;
+          img {
+            display: block;
+            width: 80%;
+            height: auto;
+            max-width: 200px;
+            margin: 0 auto;
+          }
+        }
       }
-
-      // Utility
-      .alignleft {
-        display: inline;
-        float: left;
-      }
-      .aligncenter {
-        float: none;
-        text-align: center;
-        margin: 0 auto;
-      }
-      .alignright {
-        display: inline;
-        float: right;
-      }
-      .feature {
-        margin-bottom: 15px;
-      }
-      .blog-image-span4 {
-        min-width: 230px;
-        min-height: 173px;
-        max-width: 370px;
-        max-height: 278px;
-        margin-bottom: 15px;
-      }
-      img.alignright, .wp-caption.alignright {
-        margin: .5em 0em .5em 1em;
-      }
-      img.alignleft, .wp-caption.alignright {
-        margin: .5em 1em .5em 0em;
-      }
-      a img:hover {
-        opacity:0.9;
-        filter:alpha(opacity=90); /* For IE8 and earlier */
-      }
-      video {
-        width: 100% !important;
-        height: auto !important;
-      }
-      .social {
+      section.social {
         float: left;
         display: block;
         width: 100%;
         height: 100%;
         margin: 10px 0 10px 0;
+        padding: 15px 0px;
+        border-top: 1px dotted $grey;
+        .g-plusone {
+          width: 100px;
+          float: left;
+          display: block;
+        }
+        .twitter {
+          float: left;
+          display: block;
+        }
       }
-      .g-plusone {
-        width: 100px;
-        float: left;
-        display: block;
-      }
-      .twitter {
-        float: left;
-        display: block;
+      section.comments {
+        clear: both;
       }
     }
 
