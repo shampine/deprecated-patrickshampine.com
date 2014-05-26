@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<section class="single blog">
+<section class="single archive">
   <div class="container">
     <div class="row section title">
       <p class="intro"><?php echo single_cat_title(); ?><p>
