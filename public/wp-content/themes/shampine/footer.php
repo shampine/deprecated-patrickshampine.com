@@ -46,6 +46,8 @@
       }(document));
       </script>
     '; 
-  } ?>
+  } 
+
+  wp_footer(); ?>
 </body>
 </html>
