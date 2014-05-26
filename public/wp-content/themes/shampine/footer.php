@@ -48,6 +48,7 @@
     '; 
   } 
 
-  wp_footer(); ?>
+  wp_footer(); 
+  echo '<!-- Page built in '.(timer_stop(0, 5)).' seconds utilizing '.(get_num_queries()).' queries. -->' ?>
 </body>
 </html>
