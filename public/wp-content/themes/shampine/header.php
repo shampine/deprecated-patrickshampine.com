@@ -4,7 +4,9 @@
   <meta charset="utf-8">
   <title><?php wp_title('|'); ?></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="p:domain_verify" content="46378d3c32c3c64b9e51ecf0f9ed9155"/>
+  <meta name="p:domain_verify" content="46378d3c32c3c64b9e51ecf0f9ed9155"/><?php
+  $style_path = get_template_directory() . '/css/screen.css';
+  $style_uri  = get_bloginfo('template_url') . '/css/screen.css' . '?' . filemtime($style_path); ?>
   <link href="/wp-content/themes/shampine/css/screen.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600' rel='stylesheet' type='text/css'>
   <link rel="shortcut icon" href="/wp-content/themes/shampine/img/favicon.png" />
