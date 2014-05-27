@@ -272,7 +272,12 @@ body {
         position: relative; 
         box-shadow: 0 2px 6px rgba(0,0,0,0.3);
       }
-      .contact-form {}
+      .contact-form {
+        p.wordgun-message {
+          margin-top: 25px;
+          text-align: center;
+        }
+      }
       .contact-social {
         padding-top: 30px;
         ul {
