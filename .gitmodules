@@ -13,3 +13,6 @@
 [submodule "public/wp-content/plugins/wordgun"]
 	path = public/wp-content/plugins/wordgun
 	url = git@github.com:patrickshampine/wordgun.git
+[submodule "public/wp-content/plugins/gj-redirect"]
+	path = public/wp-content/plugins/gj-redirect
+	url = git@github.com:patrickshampine/gj-redirect.git
