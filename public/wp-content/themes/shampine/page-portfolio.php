@@ -27,7 +27,7 @@ get_header(); ?>
     $browser = '
       <div class="col-sm-8 '.($even ? '' : 'col-sm-pull-4').'">
         <div class="browser-nav"><ul><li></li><li></li><li></li></ul><span>'.$portfolio['pf_link'].'</span></div>
-        <div class="browser-body"><a href="'.$portfolio['pf_link'].'"><img src="'.$portfolio['pf_image']['url'].'" alt="'.$portfolio['pf_image']['alt'].'"></a></div>
+        <div class="browser-body"><a href="'.$portfolio['pf_link'].'" target="_blank"><img src="'.$portfolio['pf_image']['url'].'" alt="'.$portfolio['pf_image']['alt'].'"></a></div>
       </div>
     ';
     
