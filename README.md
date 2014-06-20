@@ -7,16 +7,12 @@ A custom theme for my personal site/portfolio.
 
 ## installation
 
-Clone repo, run `bin/clone.sh`, create WordPress database && configure _sample* files
-
 `npm install` to configure grunt dependencies
 
 ## todo
 
-- fix the blog (needs a sidebar and other misc)  
-- integrate mailgun  
+- create the hiking template  
 - swap out wp-config for a multi environment  
-- create projects page  
 - blog more  
 
 ## dependencies
