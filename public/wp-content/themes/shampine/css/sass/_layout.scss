@@ -235,9 +235,14 @@ body {
           border: 3px solid $grey;
           border-radius: 0px 0px 5px 5px;
           background-color: white;
-          img {
+          a {
+            display: block;
             width: 100%;
-            height: auto;
+            height: 100%;
+            img {
+              width: 100%;
+              height: auto;
+            }
           }
         }
         h2 {

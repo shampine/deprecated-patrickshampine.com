@@ -9,7 +9,7 @@ get_header(); ?>
   <div class="container">
 
     <div class="row section title">
-        <p class="intro">Portfolio.</p>
+        <p class="intro"><?php echo the_title(); ?>.</p>
     </div><?php
 
     $portfolioRepeater = get_field('pf_repeater');
@@ -27,7 +27,7 @@ get_header(); ?>
     $browser = '
       <div class="col-sm-8 '.($even ? '' : 'col-sm-pull-4').'">
         <div class="browser-nav"><ul><li></li><li></li><li></li></ul><span>'.$portfolio['pf_link'].'</span></div>
-        <div class="browser-body"><img src="'.$portfolio['pf_image']['url'].'" alt="'.$portfolio['pf_image']['alt'].'"></div>
+        <div class="browser-body"><a href="'.$portfolio['pf_link'].'"><img src="'.$portfolio['pf_image']['url'].'" alt="'.$portfolio['pf_image']['alt'].'"></a></div>
       </div>
     ';
     
