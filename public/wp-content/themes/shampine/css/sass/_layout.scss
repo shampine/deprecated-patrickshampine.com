@@ -192,6 +192,10 @@ body {
         padding-top: 25px;
         padding-bottom: 45px;
         border-bottom: 1px dotted $grey;
+        @include breakpoint(max-small) {
+          margin-top: 0;
+          padding-top: 0;
+        }
         &:last-child {
           border-bottom: none;
         }
@@ -218,6 +222,10 @@ body {
               margin-right: 2px;
               background-color: $grey;
               @include border-radius(50%);
+              @include breakpoint(max-small) {
+                width: 8px;
+                height: 8px;
+              }
             }
           }
           span {
@@ -230,7 +238,10 @@ body {
             @include border-radius(5px);
             font-size: .8em;
             @include breakpoint(max-small) {
-              font-size: .6em;
+              width: 80%;
+              top: 8px;
+              left: 50px;
+              font-size: .5em;
             }
           }
         }
@@ -256,6 +267,9 @@ body {
           text-align: center;
           font-weight: 300;
           font-size: 1.5em;
+          @include breakpoint(max-small) {
+            margin-top: 5px;
+          }
         }
         p {
           color: $grey;
