@@ -115,6 +115,7 @@ See the <a href="http://aramk.com/blog/2011/09/23/crayon-language-file-specifica
 * Rust (thanks to <a href="https://github.com/Stibbons" target="_blank">Stibbons</a>)
 * Scheme (thanks to <a href="https://github.com/harry75369" target="_blank">Harry75369</a>)
 * Shell (Unix)
+* Swift (thanks to <a href="https://github.com/weyhan" target="_blank">weyhan</a>)
 * Transact-SQL
 * TeX
 * Vim
@@ -129,6 +130,7 @@ See the <a href="http://aramk.com/blog/2011/09/23/crayon-language-file-specifica
 * Arabic (thanks to <a href="http://djennadhamza.eb2a.com/" target="_blank">Djennad Hamza</a>)
 * Chinese (Simplified, thanks to <a href="http://smerpup.com/" target="_blank">Dezhi Liu</a> & <a href="http://neverno.me/" target="_blank">Jash Yin</a>)
 * Dutch (thanks to <a href="https://twitter.com/RobinRoelofsen" target="_blank">Robin Roelofsen</a> & <a href="https://twitter.com/#!/chilionsnoek" target="_blank">Chilion Snoek</a>)
+* Finnish (thanks to <a href="https://github.com/vahalan" target="_blank">vahalan</a>)
 * French (thanks to <a href="http://tech.dupeu.pl" target="_blank">Victor Felder</a>)
 * German (thanks to <a href="http://www.technologyblog.de/" target="_blank">Stephan Knau&szlig;</a>)
 * Italian (thanks to <a href="http://www.federicobellucci.net/" target="_blank">Federico Bellucci</a>)
@@ -197,6 +199,7 @@ A handful of articles from others written about Crayon, thanks guys!
 
 Thanks to all those who donate to the project:
 
+* Goretity Árpád László, (http://h2co3.org/blog), Hungary
 * AdsProvider, USA
 * Alicia Ramirez, (http://aliciaramirez.com/), Canada
 * William Eisert, USA
@@ -272,6 +275,24 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 5. Theme Editor.
 
 == Changelog ==
+
+= 2.6.5 =
+* ADDED:
+    * Shell-default theme.
+* FIXED:
+    * Added missing SVN files.
+
+= 2.6.4 =
+* ADDED:
+    * Swift language (thanks to <a href="https://github.com/weyhan" target="_blank">weyhan</a>).
+    * Light Abite theme.
+    * Missing gettext for in settings page.
+    * Finnish translation (thanks to <a href="https://github.com/vahalan" target="_blank">vahalan</a>).
+* FIXED:
+    * Issue causing other shortcode tags (e.g. captions) to be removed on post save.
+    * Improved tag editor button style when active to use the default for TinyMCE.
+    * Style missing for visual editor if switching from text mode after a refresh.
+    * String matching fixes thanks to <a href="https://github.com/mcmanigle" target="_blank">mcmanigle</a>
 
 = 2.6.3 =
 * FIXED:
