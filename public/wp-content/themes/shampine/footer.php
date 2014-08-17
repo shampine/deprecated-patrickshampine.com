@@ -6,7 +6,7 @@
         </div>
         <div class="col-sm-6">
           <ul class="social">
-            <li><a href="https://github.com/patrickshampine" target="_blank"><i class="fa fa-github-square"></i></a></li>
+            <li><a href="https://github.com/shampine" target="_blank"><i class="fa fa-github-square"></i></a></li>
             <li><a href="https://twitter.com/patrickshampine" target="_blank"><i class="fa fa-twitter-square"></i></a></li>
             <li><a href="https://plus.google.com/+PatrickShampine/" target="_blank"><i class="fa fa-google-plus-square"></i></a></li>
             <li><a href="https://www.linkedin.com/in/patrickshampine" target="_blank"><i class="fa fa-linkedin-square"></i></a></li>
