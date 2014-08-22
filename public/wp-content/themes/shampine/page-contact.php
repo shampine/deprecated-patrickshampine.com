@@ -17,7 +17,7 @@ get_header(); ?>
       </div>
       <div class="col-sm-4 contact-social">
         <ul>
-          <li><a href="https://github.com/patrickshampine" target="_blank"><i class="fa fa-github-square"></i><span>GitHub</span></a></li>
+          <li><a href="https://github.com/shampine" target="_blank"><i class="fa fa-github-square"></i><span>GitHub</span></a></li>
           <li><a href="https://twitter.com/patrickshampine" target="_blank"><i class="fa fa-twitter-square"></i><span>Twitter</span></a></li>
           <li><a href="https://plus.google.com/+PatrickShampine/" target="_blank"><i class="fa fa-google-plus-square"></i><span>Google+</span></a></li>
           <li><a href="https://www.linkedin.com/in/patrickshampine" target="_blank"><i class="fa fa-linkedin-square"></i><span>LinkedIn</span></a></li>
