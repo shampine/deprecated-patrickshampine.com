@@ -1,9 +1,9 @@
 === Disqus Comment System ===
-Contributors: disqus, alexkingorg, crowdfavorite, zeeg, tail, thetylerhayes
+Contributors: disqus, alexkingorg, crowdfavorite, zeeg, tail, thetylerhayes, ryanv12
 Tags: comments, threaded, email, notification, spam, avatars, community, profile, widget, disqus
 Requires at least: 2.8
 Tested up to: 4.0
-Stable tag: 2.80
+Stable tag: 2.84
 
 The Disqus comment system replaces your WordPress comment system with your comments hosted and powered by Disqus.
 
@@ -59,6 +59,24 @@ Go to [http://disqus.com/help/wordpress](http://disqus.com/help/wordpress)
 3. Moderation Interface
 
 == Changelog ==
+
+= 2.84 =
+
+* Fixes a bug where the comment count won't work on some themes
+
+= 2.83 =
+
+* Fix errors when using SSO and rendering javascript inline
+
+= 2.82 =
+
+* Fix PHP errors when there are no comments to sync
+* Adds a new option to render Disqus javascript directly in page markup
+
+= 2.81 =
+
+* Fix for automatic comment syncing
+* Make sure all markup validates for HTML5
 
 = 2.80 =
 
@@ -305,5 +323,3 @@ INSERT INTO `wp_options` (blog_id, option_name, option_value, autoload) VALUES (
 * Visit http://disqus.com/help/wordpress for help documentation.
 
 * Visit http://help.disqus.com for help from our support team.
-
-* Disqus also recommends the [WordPress HelpCenter](http://wphelpcenter.com/) for extended help. Disqus is not associated with the WordPress HelpCenter in any way.
