@@ -16,3 +16,6 @@
 [submodule "public/wp-content/plugins/gj-redirect"]
 	path = public/wp-content/plugins/gj-redirect
 	url = git@github.com:patrickshampine/gj-redirect.git
+[submodule "public/wp-content/plugins/jetstash-connect"]
+	path = public/wp-content/plugins/jetstash-connect
+	url = git@github.com:jetstash/jetstash-connect.git
