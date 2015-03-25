@@ -105,6 +105,7 @@ See the <a href="http://aramk.com/blog/2011/09/23/crayon-language-file-specifica
 * Java
 * JavaScript
 * Objective-C
+* Papyrus
 * Perl
 * PHP
 * PL/SQL
@@ -197,11 +198,23 @@ A handful of articles from others written about Crayon, thanks guys!
 
 Thanks to all those who donate to the project:
 
+* ZengChun Yang, China
+* Alan Kaplan, (http://www.akaplan.com/blog), US
+* Christopher Yarbrough, (http://chrisyarbrough.com/), Germany
+* Johann Weiher, (http://codequartett.de/), Germany
+* Samuel Deering, Australia
+* Billiard Greg, (http://billiardgreg.com/), USA
+* Performance Simulations, (http://www.performancesimulations.com/), USA
+* Lindsay Ross, (http://gravelrash.com), New Zealand
+* Ruperto Coronado Muñoz, Mexico
+* Stefan Onderka, (http://www.onderka.com), Germany
+* Peter Kellner, (http://peterkellner.net), USA
+* Open Hardware Design Group LLC, (http://opensourcehardwaregroup.com/), USA
 * Helen McManus, (http://invisiblepixels.org/InvisibleWords/), Netherlands
 * Thomas Fee, UK
 * Julie Knowles, (http://knowlesfamily.com/), USA
 * Peter Kriegel, (http://www.powershell-group.eu/), Germany
-* Geo My WP, (http://geomywp.com), US
+* Geo My WP, (http://geomywp.com), USA
 * Raffael Vogler, Germany
 * Erdal Cicek, Turkey
 * Cloud-VPS, Poland
@@ -283,6 +296,18 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 5. Theme Editor.
 
 == Changelog ==
+
+= 2.6.10 =
+* ADDED:
+    * Option to load crayon script in the footer to improve loading performance (thanks to <a href="https://github.com/sumhat" target="_blank">sumhat</a>).
+    * X3Info theme
+    * Papyrus language
+* FIXED:
+    * Support for nested multi-line strings in Swift language (thanks to <a href="https://github.com/nicolafiorillo" target="_blank">nicolafiorillo</a>).
+    * CrayonFormatter::print_error() called non-statically (thanks to <a href="https://github.com/ksubileau" target="_blank">https://github.com/ksubileau</a>)
+    * Admin CSS issue: https://github.com/aramk/crayon-syntax-highlighter/issues/250.
+    * Table style incompatibility with WP 2015 theme.
+    * Wrapped text now breaks per character.
 
 = 2.6.9 =
 * ADDED:
