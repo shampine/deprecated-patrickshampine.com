@@ -9,13 +9,13 @@
 	url = git@github.com:GunnJerkens/gj-prefetch.git
 [submodule "bin"]
 	path = bin
-	url = git@github.com:StartupAndPlay/server-scripts.git
+	url = git@github.com:GunnJerkens/server-scripts.git
 [submodule "public/wp-content/plugins/wordgun"]
 	path = public/wp-content/plugins/wordgun
 	url = git@github.com:patrickshampine/wordgun.git
 [submodule "public/wp-content/plugins/gj-redirect"]
 	path = public/wp-content/plugins/gj-redirect
-	url = git@github.com:patrickshampine/gj-redirect.git
+	url = git@github.com:GunnJerkens/gj-redirect.git
 [submodule "public/wp-content/plugins/jetstash-connect"]
 	path = public/wp-content/plugins/jetstash-connect
 	url = git@github.com:jetstash/jetstash-connect.git
