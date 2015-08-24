@@ -3,7 +3,7 @@
  * Plugin Name: Jetstash Connect
  * Plugin URI: https://www.jetstash.com/jetstash-connect
  * Description: Dynamically pulls forms from Jetstash and integrates them via a shortcode into the theme.
- * Version: 1.2.0
+ * Version: 1.3.2
  * Author: Jetstash
  * Author URI: https://www.jetstash.com
  */
@@ -13,17 +13,17 @@ require_once(plugin_dir_path(__FILE__).'inc/JetstashConnectMarkup.php');
 class JetstashConnect
 {
 
-  // use jetstash;
-
   /**
    * Define the private class vars
    *
    * @var $version string
    * @var $environment string
+   * @var $markup string
+   * @var $message object
    * @var $baseDir string
    * @var $baseWeb
    */
-  private $version, $environment, $markup, $baseDir, $baseWeb;
+  private $version, $environment, $markup, $message, $baseDir, $baseWeb;
 
   /**
    * Define the public class vars
@@ -41,7 +41,9 @@ class JetstashConnect
    */
   function __construct()
   {
-    $this->version     = '1.1.0';
+    $this->version = "1.3.2";
+    $this->setMessages();
+
     add_action('admin_init', array($this, 'checkVersion'));
     if(!$this->compatibleVersion()) return;
 
@@ -69,6 +71,22 @@ class JetstashConnect
   */
 
   /**
+   * Sets the plugin state messages on construct
+   *
+   * @return void
+   */
+  private function setMessages()
+  {
+    $this->message = (object) array(
+      "nonce"                => "Session expired, please refresh and try again.",
+      "empty"                => "No post was made, please refresh and try again.",
+      "recaptcha_failed"     => "Recaptcha failed, please refresh the page and try again.",
+      "recaptcha_incomplete" => "Google Recaptcha is required to submit this form.",
+      "outdated_version"     => "Jetstash Connect requires one of the latest 3 versions of WordPress.",
+    );
+  }
+
+  /**
    * Check the WordPress version against what the plugin supports
    *
    * @return void
@@ -91,10 +109,7 @@ class JetstashConnect
    */
   static function compatibleVersion()
   {
-    if(version_compare($GLOBALS['wp_version'], '4.0', '<')) {
-      return false;
-    }
-    return true;
+    return version_compare($GLOBALS['wp_version'], '4.0', '<') ? false : true;
   }
 
   /**
@@ -106,7 +121,7 @@ class JetstashConnect
   {
     if(!self::compatibleVersion()) {
       deactivate_plugins(plugin_basename(__FILE__));
-      wp_die(__('Jetstash Connect requires one of the latest 3 versions of WordPress.', 'JetstashConnect'));
+      wp_die(__($this->message->outdated_version, 'JetstashConnect'));
     }
   }
 
@@ -174,7 +189,8 @@ class JetstashConnect
   public function connectShortcode($atts)
   {
     $flags = shortcode_atts(array(
-      'form' => null,
+      'form'      => null,
+      'recaptcha' => null,
     ), $atts);
 
     return $this->buildStructure($flags);
@@ -193,7 +209,7 @@ class JetstashConnect
    */
   function pluginDisabled()
   {
-    echo '<strong>'.esc_html__('Jetstash Connect requires one of the latest 3 versions of WordPress.', 'JetstashConnect').'</strong>';
+    echo '<strong>'.esc_html__($this->message->outdated_version, 'JetstashConnect').'</strong>';
   }
 
   /**
@@ -203,7 +219,7 @@ class JetstashConnect
    */
   function loadAdminPanel()
   {
-    add_menu_page('Jetstash Connect', 'Jetstash Connect', 'administrator', 'jetstash_connect', array(&$this,'loadAdminPanelTemplates'), 'dashicons-forms', 80);
+    add_menu_page('Jetstash Connect', 'Jetstash Connect', 'administrator', 'jetstash_connect', array(&$this,'loadAdminPanelTemplates'), 'dashicons-forms', 86.75309);
   }
 
   /**
@@ -237,13 +253,23 @@ class JetstashConnect
     wp_enqueue_script('jetstash-connect', $this->baseWeb.'/js/jetstash-app.js', array('jquery'), null, true);
 
     if(isset($this->settings->disable_stylesheet) && true !== $this->settings->disable_stylesheet) {
-      wp_enqueue_style('jetstash-connect-css', $this->baseWeb.'/css/jetstash.css', false, $this->version);
+      wp_enqueue_style('jetstash-connect-css', $this->baseWeb.'/css/jetstash-app.css', false, $this->version);
+    }
+
+    if(isset($this->settings->enable_recaptcha) && $this->settings->enable_recaptcha) {
+      wp_enqueue_script('jetstash-recaptcha', 'https://www.google.com/recaptcha/api.js', false, null, false);
     }
   }
 
+  /**
+   * Loads assets into the admin
+   *
+   * @return void
+   */
   function loadAdminAssets()
   {
-    wp_enqueue_script('jetstash-connect-admin', $this->baseWeb.'/js/jetstash-admin.js', array('jquery'), null, true);
+    wp_enqueue_script('jetstash-connect-admin-js', $this->baseWeb.'/js/jetstash-admin.js', array('jquery'), null, true);
+    wp_enqueue_style('jetstash-connect-admin-css', $this->baseWeb.'/css/jetstash-admin.css', false, $this->version);
   }
 
   /*
@@ -262,11 +288,15 @@ class JetstashConnect
   public static function updateSettings($post)
   {
     $settings = new StdClass();
-    $settings->api_key            = isset($post['api_key']) ? $post['api_key'] : false;
-    $settings->user               = isset($post['user']) ? $post['user'] : false;
-    $settings->success_message    = isset($post['success_message']) ? $post['success_message'] : false;
-    $settings->cache_duration     = isset($post['cache_duration']) ? $post['cache_duration'] : false;
-    $settings->disable_stylesheet = isset($post['disable_stylesheet']) ? true : false;
+    $settings->api_key              = isset($post['api_key']) ? $post['api_key'] : false;
+    $settings->user                 = isset($post['user']) ? $post['user'] : false;
+    $settings->success_message      = isset($post['success_message']) ? $post['success_message'] : false;
+    $settings->cache_duration       = isset($post['cache_duration']) ? $post['cache_duration'] : false;
+    $settings->disable_stylesheet   = isset($post['disable_stylesheet']) ? true : false;
+    $settings->enable_recaptcha     = isset($post['enable_recaptcha']) ? true : false;
+    $settings->recaptcha_site_key   = isset($post['recaptcha_site_key']) ? $post['recaptcha_site_key'] : '';
+    $settings->recaptcha_secret_key = isset($post['recaptcha_secret_key']) ? $post['recaptcha_secret_key'] : '';
+
     $cerealSettings               = serialize($settings);
     update_option('jetstash_connect_settings', $cerealSettings);
 
@@ -325,17 +355,86 @@ class JetstashConnect
 
     // Validate our nonce and also our hidden spam field
     if(wp_verify_nonce($nonce, 'jetstash-connect') === false && !$this->test) {
-      return $this->ajaxResponse(false, 'Session expired, please refresh and try again.', $data);
+      return $this->ajaxResponse(false, $this->message->nonce, $data);
     }
+
+    // Validate our hidden field to alleviate spam
     if((!isset($data) || empty($data)) || (isset($data['first_middle_last_name']) && $data['first_middle_last_name'] !== "")) {
-      return $this->ajaxResponse(false, 'No post was made, please refresh and try again.', $data);
+      return $this->ajaxResponse(false, $this->message->empty, $data);
     }
+
+    // Validate recaptcha if it is set by the user
+    if(isset($this->settings->enable_recaptcha) && $this->settings->enable_recaptcha) {
+      if(isset($data['g-recaptcha-response'])) {
+        $recaptcha = $this->handleRecaptchaPostRequest($data['g-recaptcha-response']);
+        if(!$recaptcha->success) {
+          return $this->ajaxResponse(false, $this->message->recaptcha_failed);
+        }
+      } else {
+        return $this->ajaxResponse(false, $this->message->recaptcha_incomplete);
+      }
+    }
+
+    // Clean data
+    $data = $this->cleanData($data);
 
     $endpoint     = $this->apiUrl.'/v1/form/submit?form='.$form;
     $postResponse = json_decode($this->handlePostRequest($endpoint, $data));
     $response     = $this->ajaxResponse($postResponse->success, $postResponse->message, $data);
 
     return $response;
+  }
+
+  /**
+   * Strips fields we do NOT want to submit
+   *
+   * @param array
+   *
+   * @return array
+   */
+  private function cleanData($data)
+  {
+    // Array of fields we should never submit
+    $fields = array('first_middle_last_name', 'g-recaptcha-response');
+
+    foreach($fields as $field) {
+      if(isset($data[$field])) {
+        unset($data[$field]);
+      }
+    }
+    return $data;
+  }
+
+  /**
+   * Perform recaptcha post request
+   *
+   * @param string
+   *
+   * @return bool
+   */
+  private function handleRecaptchaPostRequest($response)
+  {
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+      CURLOPT_URL            => "https://www.google.com/recaptcha/api/siteverify",
+      CURLOPT_USERAGENT      => "Jetstash Connect v$this->version",
+      CURLOPT_POST           => true,
+      CURLOPT_POSTFIELDS     => array(
+        'secret'   => $this->settings->recaptcha_secret_key,
+        'response' => $response,
+        'remoteip' => $_SERVER['REMOTE_ADDR'],
+      ),
+      CURLOPT_HEADER         => false,
+      CURLOPT_SSL_VERIFYPEER => false,
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_FOLLOWLOCATION => false,
+    ));
+
+    $result = curl_exec($curl);
+    curl_close($curl);
+
+    return json_decode($result);
   }
 
   /**
@@ -349,14 +448,16 @@ class JetstashConnect
   {
     $curl = curl_init();
 
-    curl_setopt($curl, CURLOPT_URL, $endpoint);
-    curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 5.1; rv:6.0.2) Gecko/20100101 Firefox/6.0.2");
-    curl_setopt($curl, CURLOPT_POST, TRUE);
-    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-    curl_setopt($curl, CURLOPT_HEADER, FALSE);
-    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-    curl_setopt($curl, CURLOPT_FOLLOWLOCATION, FALSE);
+    curl_setopt_array($curl, array(
+      CURLOPT_URL            => $endpoint,
+      CURLOPT_USERAGENT      => "Jetstash Connect v$this->version",
+      CURLOPT_POST           => true,
+      CURLOPT_POSTFIELDS     => $data,
+      CURLOPT_HEADER         => false,
+      CURLOPT_SSL_VERIFYPEER => false,
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_FOLLOWLOCATION => false,
+    ));
 
     $result = curl_exec($curl);
     curl_close($curl);
@@ -394,7 +495,7 @@ class JetstashConnect
   */
 
   /**
-   * Build the structure 
+   * Build the structure
    *
    */
   public function buildStructure($flags)
@@ -441,7 +542,7 @@ class JetstashConnect
   {
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $endpoint);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); 
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
     $data = curl_exec($curl);
     curl_close($curl);
@@ -454,7 +555,7 @@ class JetstashConnect
    *
    * @param string
    *
-   * @return 
+   * @return
    */
   protected function retrieveSingleFormFields($formId)
   {

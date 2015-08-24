@@ -1,0 +1,38 @@
+/* Jetstash. */
+
+#jetstash-connect {
+  width: 100%;
+  height: auto;
+  padding: 15px;
+}
+
+#jetstash-connect .hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+#jetstash-connect .form-group {
+  overflow: hidden;
+  clear: both;
+  margin: 10px 0px;
+}
+
+#jetstash-connect .radio-label {
+  margin: 0px;
+}
+
+#jetstash-connect .radio {
+  float: left;
+  margin-right: 15px;
+  margin-left: 2px;
+}
+
+#jetstash-connect .has-error label {
+  color: #a94442;
+}
+
+#jetstash-connect .has-error input,
+#jetstash-connect .has-error textarea {
+  border-color: #ebccd1;
+  background-color: #f2dede;
+}

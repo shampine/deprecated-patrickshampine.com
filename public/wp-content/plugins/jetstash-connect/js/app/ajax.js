@@ -1,15 +1,23 @@
 ;(function($) {
 
+  /**
+   * Declares our Jetstash function
+   *
+   */
   function Jetstash() {
     this.$form   = $('#jetstash-connect');
     this.$error  = $('#jetstash-error');
     this.options = jetstashConnect;
     this.state   = { error: false, message: "All fields completed successfully.", element: null };
 
-    this.submit();
+    this.loadListeners();
   }
 
-  Jetstash.prototype.submit = function() {
+  /**
+   * Loads the form listener
+   *
+   */
+  Jetstash.prototype.loadListeners = function() {
     var self = this;
 
     self.$form.on('submit',function(e) {
@@ -30,7 +38,9 @@
           post   : data,
         },
         function(response) {
+          response = JSON.parse(response);
           self.successOutput(response);
+          self.loadCustomEvent("jetstash", response);
         });
       } else {
         self.errorOutput();
@@ -38,6 +48,10 @@
     });
   };
 
+  /**
+   * Checks all required fields
+   *
+   */
   Jetstash.prototype.checkRequired = function() {
     var self = this;
 
@@ -56,12 +70,12 @@
         field_name = el.siblings('label').text() || el.closest('label').text().trim() || el.attr('name');
 
         if(value === "" || value === null) {
-          self.setStateError(field_name + ' is required.',el);
+          self.setStateError(field_name + ' is required.', el);
           return false;
         }
 
         if('checkbox' === type && !el.is(':checked')) {
-          self.setStateError(field_name + ' is required.',el);
+          self.setStateError(field_name + ' is required.', el);
           return false;
         }
 
@@ -83,31 +97,56 @@
     });
   };
 
+  /**
+   * LOOSE email validation, there is PHP validation in the class
+   * and validation in the actual application
+   *
+   * @param string
+   */
   Jetstash.prototype.validateEmail = function(email) {
     var re = /\S+@\S+\.\S+/;
     return re.test(email);
   };
 
+  /**
+   * Clears errors from the DOM
+   *
+   */
   Jetstash.prototype.clearErrors = function() {
     this.$form.find('div.form-group').removeClass('has-error');
     this.$error.empty();
   };
 
+  /**
+   * Sets our state object
+   *
+   * @param string, node object
+   */
   Jetstash.prototype.setStateError = function(message, el) {
     this.state.error   = true;
     this.state.message = message;
     this.state.element = el;
   };
 
+  /**
+   * Displays the error output and updates the dom
+   *
+   */
   Jetstash.prototype.errorOutput = function() {
     this.clearErrors();
-    this.state.element.closest('div.form-group').addClass('has-error');
-    this.$error.text(this.state.message);
+
+    if(this.state.element !== null) {
+      this.state.element.closest('div.form-group').addClass('has-error');
+      this.$error.text(this.state.message);
+    }
   };
 
-  Jetstash.prototype.successOutput = function(data) {
-    var response = JSON.parse(data);
-
+  /**
+   * On submission success displays state
+   *
+   * @param string
+   */
+  Jetstash.prototype.successOutput = function(response) {
     this.clearErrors();
 
     if(response.success === true) {
@@ -123,6 +162,18 @@
     }
   };
 
-  new Jetstash();
+  /**
+   * Loads custom events
+   *
+   * @param string, object
+   */
+  Jetstash.prototype.loadCustomEvent = function(name, param) {
+    $.event.trigger({ type: name, 'state': param });
+  };
+
+  // Load the Jetstash class if exists
+  if($('form#jetstash-connect').length > 0) {
+    new Jetstash();
+  }
 
 })(jQuery);

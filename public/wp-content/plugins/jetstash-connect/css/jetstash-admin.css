@@ -1,0 +1,29 @@
+/* Jetstash. */
+
+#jetstash-settings img.logo {
+  max-width: 150px;
+  height: auto;
+}
+
+#jetstash-settings input.btn {
+  width: auto;
+  margin-top: 15px;
+}
+
+#jetstash-settings select, #jetstash-settings input,
+#jetstash-settings textarea {
+  width: 350px;
+}
+
+#jetstash-settings input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+
+#jetstash-settings textarea {
+  resize: none;
+}
+
+#jetstash-settings .hidden {
+  display: none;
+}

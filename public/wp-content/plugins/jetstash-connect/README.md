@@ -22,6 +22,14 @@ In a template/theme:
 <?php do_shortcode('[jetstash form="YOUR_FORM_ID"]'); ?>
 ```
 
+After a successful ajax submission you can listen for a custom event `jetstash` to hook in custom code. The state attribute contains the submission data and the response data from the application.
+
+```
+$(window).on("jetstash", function(e) {
+  console.log(e.state);
+});
+```
+
 ## issues
 
 Bugs, pull requests, features, etc. are all handled and maintained on GitHub.
@@ -30,7 +38,7 @@ Bugs, pull requests, features, etc. are all handled and maintained on GitHub.
 
 ## testing
 
-The ability to run unit tests if updating the plugin has some requirements and caveats. To run the test successfully we need to shoe horn it into
+The ability to run unit tests if updating the plugin has some requirements and caveats. To run the test successfully we need to shoe horn it into a working version of WordPress.
 
 ### requirements
 
