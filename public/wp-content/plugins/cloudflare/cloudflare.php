@@ -3,8 +3,8 @@
 Plugin Name: CloudFlare
 Plugin URI: http://www.cloudflare.com/wiki/CloudFlareWordPressPlugin
 Description: CloudFlare integrates your blog with the CloudFlare platform.
-Version: 1.3.19
-Author: Ian Pye, Jerome Chen, James Greene, Simon Moore, David Fritsch (CloudFlare Team)
+Version: 1.3.20
+Author: Ian Pye, Jerome Chen, James Greene, Simon Moore, David Fritsch, John Wineman (CloudFlare Team)
 License: GPLv2
 */
 
@@ -26,11 +26,14 @@ Plugin adapted from the Akismet WP plugin.
 
 */	
 
-define('CLOUDFLARE_VERSION', '1.3.19');
+define('CLOUDFLARE_VERSION', '1.3.20');
 define('CLOUDFLARE_API_URL', 'https://www.cloudflare.com/api_json.html'); 
 define('CLOUDFLARE_SPAM_URL', 'https://www.cloudflare.com/ajax/external-event.html');
 
-require_once("ip_in_range.php");
+require_once("IpRewrite.php");
+require_once("IpRange.php");
+
+use CloudFlare\IpRewrite;
 
 // Make sure we don't expose any info if called directly
 if ( !function_exists( 'add_action' ) ) {
@@ -40,37 +43,8 @@ if ( !function_exists( 'add_action' ) ) {
 
 function cloudflare_init() {
     global $is_cf;
-    
-    $is_cf = (isset($_SERVER["HTTP_CF_CONNECTING_IP"]))? TRUE: FALSE;    
 
-	// only run this logic if the REMOTE_ADDR is populated, to avoid causing notices in CLI mode
-    if (isset($_SERVER["REMOTE_ADDR"])) {
-		if (strpos($_SERVER["REMOTE_ADDR"], ":") === FALSE) {
-	
-			$cf_ip_ranges = array("199.27.128.0/21","173.245.48.0/20","103.21.244.0/22","103.22.200.0/22","103.31.4.0/22","141.101.64.0/18","108.162.192.0/18","190.93.240.0/20","188.114.96.0/20","197.234.240.0/22","198.41.128.0/17","162.158.0.0/15","104.16.0.0/12","172.64.0.0/13");
-			// IPV4: Update the REMOTE_ADDR value if the current REMOTE_ADDR value is in the specified range.
-			foreach ($cf_ip_ranges as $range) {
-				if (ipv4_in_range($_SERVER["REMOTE_ADDR"], $range)) {
-					if ($_SERVER["HTTP_CF_CONNECTING_IP"]) {
-						$_SERVER["REMOTE_ADDR"] = $_SERVER["HTTP_CF_CONNECTING_IP"];
-					}
-					break;
-				}
-			}        
-		}
-		else {
-			$cf_ip_ranges = array("2400:cb00::/32","2606:4700::/32","2803:f800::/32","2405:b500::/32","2405:8100::/32");
-			$ipv6 = get_ipv6_full($_SERVER["REMOTE_ADDR"]);
-			foreach ($cf_ip_ranges as $range) {
-				if (ipv6_in_range($ipv6, $range)) {
-					if ($_SERVER["HTTP_CF_CONNECTING_IP"]) {
-						$_SERVER["REMOTE_ADDR"] = $_SERVER["HTTP_CF_CONNECTING_IP"];
-					}
-					break;
-				}
-			}
-		}
-	}
+	$is_cf = IpRewrite::isCloudFlare();
 
     add_action('admin_menu', 'cloudflare_config_page');
 }
@@ -120,7 +94,6 @@ function cloudflare_conf() {
         'ip_restore_on' => array('text' => __('Plugin Status: True visitor IP is being restored')),
         'comment_spam_on' => array('text' => __('Plugin Status: CloudFlare will be notified when you mark comments as spam')),
         'comment_spam_off' => array('text' => __('Plugin Status: CloudFlare will NOT be notified when you mark comments as spam, enter your API details below')),
-        'curl_not_installed' => array('text' => __('Plugin Status: cURL is not installed/enabled on your server. You will not be able to toggle <a href="https://support.cloudflare.com/hc/en-us/articles/200168246-What-does-CloudFlare-Development-mode-mean-" target="_blank">development mode</a> via this plugin. If you wish to do this, please contact your server administrator or hosting provider for assistance with installing cURL.')),
         'dev_mode_on' => array('text' => __('Development mode is On. Happy blogging!')),
         'dev_mode_off' => array('text' => __('Development mode is Off. Happy blogging!')),
         'protocol_rewrite_on' => array('text' => __('Protocol rewriting is On. Happy blogging!')),
@@ -597,3 +570,27 @@ function cloudflare_buffer_init() {
 }
 
 add_action('plugins_loaded', 'cloudflare_buffer_init');
+
+// wordpress 4.4 srcset ssl fix
+// Shoutout to @bhubbard: https://wordpress.org/support/topic/44-https-rewritte-aint-working-with-images?replies=12
+function cloudflare_ssl_srcset( $sources ) {
+	$cloudflare_protocol_rewrite = load_protocol_rewrite();
+
+	if ($cloudflare_protocol_rewrite == 1) {
+        foreach ( $sources as &$source ) {
+            $re     = "/https?:\\/\\//i";
+            $subst  = "//";
+            $return = preg_replace($re, $subst, $source['url']);
+
+            if ($return) {
+                $source['url'] = $return;
+            }
+        }
+
+        return $sources;
+	}
+
+    return $sources;
+}
+
+add_filter( 'wp_calculate_image_srcset', 'cloudflare_ssl_srcset' );

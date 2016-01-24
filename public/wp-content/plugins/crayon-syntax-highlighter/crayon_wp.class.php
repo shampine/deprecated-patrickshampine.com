@@ -3,7 +3,7 @@
 Plugin Name: Crayon Syntax Highlighter
 Plugin URI: https://github.com/aramk/crayon-syntax-highlighter
 Description: Supports multiple languages, themes, highlighting from a URL, local file or post text.
-Version: 2.7.1
+Version: 2.8.0
 Author: Aram Kocharyan
 Author URI: http://aramk.com/
 Text Domain: crayon-syntax-highlighter
@@ -33,11 +33,12 @@ if (CRAYON_THEME_EDITOR) {
 }
 require_once('crayon_settings_wp.class.php');
 
-if (defined('ABSPATH')) {
-    // Used to get plugin version info
-    require_once(ABSPATH . 'wp-admin/includes/plugin.php');
-    crayon_set_info(get_plugin_data(__FILE__));
-}
+crayon_set_info(array(
+	'Version' => '_2.7.2_beta',
+	'Date' => '25th April, 2015',
+	'AuthorName' => 'Aram Kocharyan',
+	'PluginURI' => 'https://github.com/aramk/crayon-syntax-highlighter',
+));
 
 /* The plugin class that manages all other classes and integrates Crayon with WP */
 
@@ -834,7 +835,7 @@ class CrayonWP {
      * Check if the $ notation has been used to ignore [crayon] tags within posts and remove all matches
      * Can also remove if used without $ as a regular crayon
      *
-     * @depreciated
+     * @deprecated
      */
     public static function crayon_remove_ignore($the_content, $ignore_flag = '$') {
         if ($ignore_flag == FALSE) {

@@ -541,7 +541,7 @@ EOT;
     }
 
     // Returns path according to detected use of forwardslash/backslash
-    // Depreciated from regular use after v.1.1.1
+    // Deprecated from regular use after v.1.1.1
     public static function path($path, $detect) {
         $slash = self::detect_slash($detect);
         return str_replace(array('\\', '/'), $slash, $path);
@@ -661,7 +661,7 @@ EOT;
     public static function version_parts($version) {
         preg_match('#[\d+\.]+#msi', $version, $match);
         if (count($match[0])) {
-            return split('\.', $match[0]);
+            return explode('.', $match[0]);
         } else {
             return array();
         }
