@@ -313,6 +313,14 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 
 == Changelog ==
 
+= 2.8.4 =
+* ADDED:
+    * CrayonWP::highlight() can return plain text instead of HTML. Used for AJAX requests to prevent
+      XSS vulnerabilities.
+* FIXED:
+    * Support for tags (e.g. formatting) in the HTML for CrayonWP::highlight(). This affects
+      bbPress. Only script tags and event attributes are stripped.
+
 = 2.8.3 =
 * FIXED:
     * header() use in CrayonWP::highlight()
