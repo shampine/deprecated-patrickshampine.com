@@ -77,12 +77,12 @@ function extract_from_markers( $filename, $marker ) {
 	foreach ( $markerdata as $markerline ) {
 		if ( false !== strpos( $markerline, '# END ' . $marker ) ) {
 			$state = false;
-			if ( $state ) {
-				$result[] = $markerline;
-			}
-			if ( false !== strpos( $markerline, '# BEGIN ' . $marker ) ) {
-				$state = true;
-			}
+		}
+		if ( $state ) {
+			$result[] = $markerline;
+		}
+		if ( false !== strpos( $markerline, '# BEGIN ' . $marker ) ) {
+			$state = true;
 		}
 	}
 
@@ -1099,15 +1099,17 @@ function wp_admin_canonical_url() {
  * @since 4.9.0
  */
 function wp_admin_headers() {
-	$policy = 'same-origin';
+	$policy = 'strict-origin-when-cross-origin';
 
 	/**
-	 * Filters the admin referrer policy header value. Default 'same-origin'.
+	 * Filters the admin referrer policy header value.
 	 *
 	 * @since 4.9.0
+	 * @since 4.9.5 The default value was changed to 'strict-origin-when-cross-origin'.
+	 *
 	 * @link https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
 	 *
-	 * @param string $policy The referrer policy header value.
+	 * @param string $policy The admin referrer policy header value. Default 'strict-origin-when-cross-origin'.
 	 */
 	$policy = apply_filters( 'admin_referrer_policy', $policy );
 
