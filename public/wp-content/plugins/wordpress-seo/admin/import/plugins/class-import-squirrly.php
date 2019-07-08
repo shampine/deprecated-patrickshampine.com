@@ -9,6 +9,7 @@
  * Class with functionality to import & clean Squirrly post metadata.
  */
 class WPSEO_Import_Squirrly extends WPSEO_Plugin_Importer {
+
 	/**
 	 * The plugin name.
 	 *
@@ -159,7 +160,7 @@ class WPSEO_Import_Squirrly extends WPSEO_Plugin_Importer {
 		}
 
 		if ( is_numeric( $post_identifier ) ) {
-			$post_id = (int) $post_identifier;
+			$post_id         = (int) $post_identifier;
 			$data['focuskw'] = $this->maybe_add_focus_kw( $post_identifier );
 		}
 

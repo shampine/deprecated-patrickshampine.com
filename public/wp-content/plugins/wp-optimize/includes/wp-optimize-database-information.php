@@ -18,6 +18,7 @@ class WP_Optimize_Database_Information {
 	const CSV_ENGINE = 'CSV';
 	const NDB_ENGINE = 'NDB';
 	const ARIA_ENGINE = 'Aria'; // MariaDB
+	const VIEW = 'VIEW';
 
 	/**
 	 * Returns server type MySQL or MariaDB if mysql database or Unknown if not mysql.
@@ -77,6 +78,8 @@ class WP_Optimize_Database_Information {
 		$table_info = $this->get_table_status($table_name);
 
 		if ($table_info) {
+			if (!$table_info->Engine && $this->is_view($table_name)) return self::VIEW;
+
 			return $table_info->Engine;
 		}
 
@@ -91,16 +94,11 @@ class WP_Optimize_Database_Information {
 	 * @return bool|mixed
 	 */
 	public function get_table_status($table_name, $update = false) {
-		global $wpdb;
 
-		if (false == $update) {
-			$tables_info = $this->get_show_table_status();
+		$tables_info = $this->get_show_table_status($update);
 
-			foreach ($tables_info as $table_info) {
-				if ($table_name == $table_info->Name) return $table_info;
-			}
-		} else {
-			return $wpdb->get_row($wpdb->prepare('SHOW TABLE STATUS LIKE %s;', $table_name));
+		foreach ($tables_info as $table_info) {
+			if ($table_name == $table_info->Name) return $table_info;
 		}
 
 		return false;
@@ -109,17 +107,64 @@ class WP_Optimize_Database_Information {
 	/**
 	 * Returns result for query SHOW TABLE STATUS.
 	 *
+	 * @param bool $update refresh or no cached data
 	 * @return array
 	 */
-	public function get_show_table_status() {
+	public function get_show_table_status($update = false) {
 		global $wpdb;
 		static $tables_info = array();
 
-		if (empty($tables_info)) {
+		if ($update || empty($tables_info) || !is_array($tables_info)) {
 			$tables_info = $wpdb->get_results('SHOW TABLE STATUS');
 		}
 
+		// If option innodb_file_per_table is disabled then Data_free column will have summary overhead value for all table.
+		if (!empty($tables_info)) {
+			foreach ($tables_info as $i => $table) {
+				if (self::INNODB_ENGINE == $table->Engine && false == $this->is_option_enabled('innodb_file_per_table')) {
+					$tables_info[$i]->Data_free = 0;
+				}
+			}
+		}
+
 		return $tables_info;
+	}
+
+	/**
+	 * Returns result for query SHOW FULL TABLES as associative array [table_name] => table_type.
+	 *
+	 * @return array
+	 */
+	public function get_show_full_tables() {
+		global $wpdb;
+
+		static $tables_info = array();
+
+		if (empty($tables_info) || !is_array($tables_info)) {
+			$_tables_info = $wpdb->get_results('SHOW FULL TABLES', ARRAY_N);
+
+			if (!empty($_tables_info)) {
+				foreach ($_tables_info as $row) {
+					$tables_info[$row[0]] = $row[1];
+				}
+			}
+		}
+
+		return $tables_info;
+	}
+
+	/**
+	 * Checks if table is a VIEW.
+	 *
+	 * @param  string $table_name
+	 * @return bool
+	 */
+	public function is_view($table_name) {
+		$tables_info = $this->get_show_full_tables();
+
+		if (!array_key_exists($table_name, $tables_info)) return false;
+
+		return ('VIEW' == $tables_info[$table_name]);
 	}
 
 	/**
@@ -265,21 +310,27 @@ class WP_Optimize_Database_Information {
 		global $wpdb;
 
 		if (is_array($table)) {
-			$table = join(',', $table);
+			$table = join('`,`', $table);
 		}
 
 		$result = array();
 
 		if (empty($table)) return $result;
 
-		$query_result = $wpdb->get_results('CHECK TABLE '.$table.';');
+		$query_result = $wpdb->get_results('CHECK TABLE `'.$table.'`;');
 
 		if (empty($query_result)) return $result;
 
 		foreach ($query_result as $row) {
-			$table_name = array_pop(explode('.', $row->Table));
+			$table_name_parts = explode('.', rtrim($row->Table, ' .'));
+			$table_name = array_pop($table_name_parts);
 
-			if (!array_key_exists($table_name, $result)) $result[$table_name] = array();
+			if (!array_key_exists($table_name, $result)) {
+				$result[$table_name] = array(
+					'status' => '',
+					'corrupted' => false,
+				);
+			}
 
 			if ('error' == $row->Msg_type) {
 				$result[$table_name]['status'] = $row->Msg_type;
@@ -336,5 +387,165 @@ class WP_Optimize_Database_Information {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Check if $table using by any of installed plugins.
+	 *
+	 * @param string $table
+	 * @return bool
+	 */
+	public function is_table_using_by_plugin($table) {
+		$plugin_names = $this->get_table_plugin($table);
+
+		// if we can't determine which plugin use $table then return true.
+		if (false == $plugin_names) {
+			return true;
+		}
+
+		// is WordPress core table or using by any of installed plugins then return true.
+		foreach ($plugin_names as $plugin_name) {
+			if (__('WordPress core', 'wp-optimize') == $plugin_name || in_array($plugin_name, $this->get_all_installed_plugins())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get information about relations between tables and plugins. [ 'table' => ['plugin1', 'plugin2', ...], ... ].
+	 *
+	 * @return array
+	 */
+	private function get_all_plugin_tables_relationship() {
+		static $plugin_tables;
+
+		$wp_core_tables = array(
+			'blogs',
+			'blog_versions',
+			'commentmeta',
+			'comments',
+			'links',
+			'options',
+			'postmeta',
+			'posts',
+			'registration_log',
+			'signups',
+			'term_relationships',
+			'term_taxonomy',
+			'termmeta',
+			'terms',
+			'usermeta',
+			'users',
+			'site',
+			'sitemeta',
+		);
+
+		if (is_array($plugin_tables)) return $plugin_tables;
+
+		$plugin_tables_json_file = WPO_PLUGIN_MAIN_PATH.'/plugin.json';
+		$plugin_tables = array();
+
+		if (is_file($plugin_tables_json_file) && is_readable($plugin_tables_json_file)) {
+			// get data from plugin.json file.
+			$plugin_tables = json_decode(file_get_contents($plugin_tables_json_file), true);
+		}
+
+		foreach ($wp_core_tables as $table) {
+			$plugin_tables[$table][] = __('WordPress core', 'wp-optimize');
+		}
+
+		// add WP-Optimize tables.
+		$plugin_tables['tm_taskmeta'][] = 'wp-optimize';
+		$plugin_tables['tm_tasks'][] = 'wp-optimize';
+
+		return $plugin_tables;
+	}
+
+	/**
+	 * Try to get plugin name by table name and return it or return false if plugin is not defined.
+	 *
+	 * @param string $table
+	 * @return array|bool - array with plugin slugs or false.
+	 */
+	public function get_table_plugin($table) {
+		global $wpdb;
+
+		// delete table prefix.
+		$table = preg_replace('/^'.$wpdb->prefix.'([0-9]+_)?/', '', $table);
+		$plugins_tables = $this->get_all_plugin_tables_relationship();
+
+		if (array_key_exists($table, $plugins_tables)) {
+			return $plugins_tables[$table];
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get all installed plugin slugs.
+	 *
+	 * @return array
+	 */
+	public function get_all_installed_plugins() {
+		static $installed_plugins;
+
+		if (is_array($installed_plugins)) return $installed_plugins;
+
+		$installed_plugins = array();
+		
+		if (!function_exists('get_plugins')) include_once(ABSPATH.'wp-admin/includes/plugin.php');
+		
+		$plugins = get_plugins();
+
+		foreach ($plugins as $plugin_file => $plugin_data) {
+			if ('' != $plugin_data['TextDomain']) {
+				$installed_plugins[] = $plugin_data['TextDomain'];
+			} else {
+				$plugin_file_parts = explode('/', $plugin_file);
+				$installed_plugins[]= $plugin_file_parts[0];
+			}
+		}
+
+		return $installed_plugins;
+	}
+
+	/**
+	 * Check current plugin status installed/not installed and active/inactive.
+	 *
+	 * @param string $plugin
+	 * @return array - ['installed' => true|false, 'active' => true|false]
+	 */
+	public function get_plugin_status($plugin) {
+	
+		if (!function_exists('get_plugins')) include_once(ABSPATH.'wp-admin/includes/plugin.php');
+		$plugins = get_plugins();
+
+		// return true for wp-optimize without checking.
+		if ('wp-optimize' == $plugin) {
+			return array(
+				'installed' => true,
+				'active' => true,
+			);
+		}
+
+		$installed = false;
+		$active = false;
+
+		foreach ($plugins as $plugin_file => $plugin_data) {
+			$plugin_file_parts = explode('/', $plugin_file);
+			$plugin_slug = $plugin_file_parts[0];
+
+			if ($plugin == $plugin_slug) {
+				$installed = true;
+				$active = is_plugin_active($plugin_file);
+			}
+		}
+
+		return array(
+			'installed' => $installed,
+			'active' => $active,
+		);
 	}
 }

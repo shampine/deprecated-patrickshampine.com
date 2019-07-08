@@ -28,10 +28,12 @@ abstract class WP_Optimization {
 
 	public $run_multisite = true;
 
+	public $support_preview = true; // if true then optimization support preview action for optimization data.
+
 	protected $support_ajax_get_info = false; // set to true if optimization support getting info about optimization asynchronously.
 
 	/**
-	 * This property indicates whether running this optimization is likely to change the overall table optimization state. We set this to 'true' on optimizations that run SQL OPTIMIZE commands. It is only used for the UI. Strictly, of course, any optimization that deletes something can cause increased fragmentation; so; in that sense, it would be true for every optimization; but since we are just using it to keep the UI reasonably fresh, and since there is a manual "refresh" button, we set it only on some optimisations.
+	 * This property indicates whether running this optimization is likely to change the overall table optimization state. We set this to 'true' on optimizations that run SQL OPTIMIZE commands. It is only used for the UI. Strictly, of course, any optimization that deletes something can cause increased fragmentation; so; in that sense, it would be true for every optimization; but since we are just using it to keep the UI reasonably fresh, and since there is a manual "refresh" button, we set it only on some optimizations.
 	 *
 	 * @var [$changes_table_data
 	 */
@@ -110,6 +112,48 @@ abstract class WP_Optimization {
 	 */
 	public function display_in_optimizations_list() {
 		return true;
+	}
+
+	/**
+	 * Returns data those should be optimized. Used to display this information in a popup tool
+	 * for previewing and removing certain data for optimization.
+	 *
+	 * @param array $params
+	 *
+	 * @return array
+	 */
+	public function preview($params) {
+		return array(
+			'id_key'	=> 'id', // key used used to identify data.
+			'offset'	=> $params['offset'],
+			'limit'		=> $params['limit'],
+			'total'		=> 0,
+			'data'		=> array(), // returned data as associative array where keys are column names and values - database cell values.
+		);
+	}
+
+	/**
+	 * Convert all applicable characters to HTML entities in array. Used to prepare data for output in browser for preview.
+	 *
+	 * @param  array $array        source array
+	 * @param  array $exclude_keys what items shoudn't be encoded.
+	 *
+	 * @return array
+	 */
+	public function htmlentities_array($array, $exclude_keys = array()) {
+		if (!is_array($array) || empty($array)) return $array;
+
+		foreach ($array as $key => $value) {
+			if (in_array($key, $exclude_keys)) continue;
+
+			if (!is_array($value)) {
+				$array[$key] = htmlentities($value);
+			} else {
+				$array[$key] = $this->htmlentities_array($value);
+			}
+		}
+
+		return $array;
 	}
 
 	/**
@@ -197,6 +241,11 @@ abstract class WP_Optimization {
 		if ($this->is_multisite_mode()) {
 			$all_sites = false;
 			$selected_sites = array();
+
+			// support both arrays and single values in data site id parameter.
+			if (isset($this->data['site_id']) && !is_array($this->data['site_id'])) {
+				$this->data['site_id'] = array($this->data['site_id']);
+			}
 
 			$optimization_sites = (isset($this->data['site_id'])) ? $this->data['site_id'] : $this->options->get_wpo_sites_option();
 
@@ -302,7 +351,7 @@ abstract class WP_Optimization {
 	
 
 	/**
-	 * The next three functions reflect the fact that historically, WP-Optimize has not, for all optimizations, used the same ID consistently throughout forms, saved settings, and saved settings for automatic clean-ups. Mostly, it has; but some flexibility is needed for the exceptions.
+	 * The next three functions reflect the fact that historically, WP-Optimize has not, for all optimizations, used the same ID consistently throughout forms, saved settings, and saved settings for scheduled clean-ups. Mostly, it has; but some flexibility is needed for the exceptions.
 	 */
 	public function get_setting_id() {
 		return empty($this->setting_id) ? 'user-'.$this->id : 'user-'.$this->setting_id;
@@ -330,7 +379,7 @@ abstract class WP_Optimization {
 	 * @return string Error message.
 	 */
 	public function get_auto_option_description() {
-		return 'Error: missing automatic option description ('.$this->id.')';
+		return 'Error: missing scheduled option description ('.$this->id.')';
 	}
 	
 	/**
@@ -384,5 +433,37 @@ abstract class WP_Optimization {
 		}
 		
 		return $settings_html;
+	}
+
+	/**
+	 * Wrap $text as a link for preview action. If preview is not supported then return just $text.
+	 *
+	 * @param string $text
+	 * @param array  $attributes
+	 *
+	 * @return string
+	 */
+	public function get_preview_link($text, $attributes = array()) {
+		// if preview is not supported then return just $text.
+		if (false == $this->support_preview || false == WP_Optimize::is_premium()) return $text;
+
+		$attributes = array_merge(
+			array(
+				'title' => __('Preview found items', 'wp-optimize'),
+				'data-id' => $this->id,
+				'data-title' => $this->settings_label(),
+			),
+			$attributes
+		);
+
+		$str_attr = '';
+
+		foreach ($attributes as $key => $value) {
+			$str_attr .= ' '.$key.'="'.esc_attr($value).'"';
+		}
+
+		$link = '<a href="#" class="wpo-optimization-preview"'.$str_attr.'>'.$text.'</a>';
+
+		return $link;
 	}
 }

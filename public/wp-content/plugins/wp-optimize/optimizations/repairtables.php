@@ -12,6 +12,8 @@ class WP_Optimization_repairtables extends WP_Optimization {
 
 	public $run_multisite = false;
 
+	public $support_preview = false;
+
 	/**
 	 * Display or hide optimization in optimizations list.
 	 *
@@ -29,21 +31,24 @@ class WP_Optimization_repairtables extends WP_Optimization {
 		if (isset($this->data['optimization_table']) && '' != $this->data['optimization_table']) {
 			$table = $this->optimizer->get_table($this->data['optimization_table']);
 
-			$result = $this->repair_table($table);
+			$result = (false === $table) ? false : $this->repair_table($table);
 
 			if ($result) {
 				$wp_optimize = WP_Optimize();
+
 				$tablestatus = $wp_optimize->get_db_info()->get_table_status($table->Name, true);
 
 				$is_optimizable = $wp_optimize->get_db_info()->is_table_optimizable($table->Name);
+				$is_type_supported = $wp_optimize->get_db_info()->is_table_type_optimize_supported($table->Name);
 
 				$tableinfo = array(
 					'rows' => number_format_i18n($tablestatus->Rows),
 					'data_size' => $wp_optimize->format_size($tablestatus->Data_length),
 					'index_size' => $wp_optimize->format_size($tablestatus->Index_length),
 					'overhead' => $is_optimizable ? $wp_optimize->format_size($tablestatus->Data_free) : '-',
-					'type' => $table->Engine,
+					'type' => $tablestatus->Engine,
 					'is_optimizable' => $is_optimizable,
+					'is_type_supported' => $is_type_supported,
 				);
 
 				$this->register_meta('tableinfo', $tableinfo);
@@ -86,9 +91,9 @@ class WP_Optimization_repairtables extends WP_Optimization {
 
 		if (false == $table_obj->is_needing_repair) return true;
 
-		$this->logger->info('REPAIR TABLE '.$table_obj->Name);
+		$this->logger->info('REPAIR TABLE `'.$table_obj->Name. '`');
 
-		$results = $wpdb->get_results('REPAIR TABLE '.$table_obj->Name);
+		$results = $wpdb->get_results('REPAIR TABLE `'.$table_obj->Name . '`');
 
 		if (!empty($results)) {
 			foreach ($results as $row) {
@@ -100,13 +105,17 @@ class WP_Optimization_repairtables extends WP_Optimization {
 			}
 		}
 
+		// update info in options table and use it to notify user about corrupted tables.
+		$this->get_corrupted_tables_count();
+
 		return $success;
 	}
 
 	/**
-	 * Register info about optimization.
+	 * Returns count of corrupted tables and update corrupted-tables-count value in options used to show
+	 * information for user in sidebar about corrupted tables count.
 	 */
-	public function get_info() {
+	public function get_corrupted_tables_count() {
 		$tablesinfo = $this->optimizer->get_tables();
 
 		$corrupted_tables = 0;
@@ -118,6 +127,19 @@ class WP_Optimization_repairtables extends WP_Optimization {
 				}
 			}
 		}
+
+		// save results to options table and use it to notify user about corrupted tables.
+		$this->options->update_option('corrupted-tables-count', $corrupted_tables);
+
+		return $corrupted_tables;
+	}
+
+	/**
+	 * Register info about optimization.
+	 */
+	public function get_info() {
+
+		$corrupted_tables = $this->get_corrupted_tables_count();
 
 		if (0 == $corrupted_tables) {
 			$this->register_output(__('No corrupted tables found', 'wp-optimize'));

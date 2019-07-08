@@ -2,8 +2,8 @@
 Contributors: disqus, alexkingorg, crowdfavorite, zeeg, tail, thetylerhayes, ryanv12, iamfrancisyo, brevityness
 Tags: comments, threaded, email, notification, spam, avatars, community, profile, widget, disqus
 Requires at least: 4.4
-Tested up to: 4.9.4
-Stable tag: 3.0.15
+Tested up to: 5.1
+Stable tag: 3.0.17
 Requires PHP: 5.4
 
 Disqus is the web's most popular comment system. Use Disqus to increase engagement, retain readers, and grow your audience.
@@ -97,6 +97,8 @@ Check out our [WordPress Troubleshooting guide](https://help.disqus.com/customer
 
 **NOTE: It is recommended that you [backup your database](http://codex.wordpress.org/Backing_Up_Your_Database) before installing the plugin.**
 
+https://www.youtube.com/watch?v=a4JBJXyuaFk
+
 = Syncing comments to WordPress =
 Comment Syncing copies comments made in Disqus to your WordPress installation as backup in case you ever decide to switch back to native WordPress comments. Syncing is not enabled by default. To enable syncing, you'll need to set it up either by creating an API application (follow [instructions here](https://help.disqus.com/customer/portal/articles/960360)) or via Automatic Installation in the plugin.
 
@@ -121,6 +123,15 @@ Go to [https://disqus.com/help/wordpress](https://disqus.com/help/wordpress)
 11. Moderate by Email Notifications
 
 == Changelog ==
+
+= 3.0.17 =
+* Bumping version for WP 5.1 version bump. (Changes to README versions and main php file's version)
+* Fixed Undefined index bug where HTTP_HOST could not find web server
+
+= 3.0.16 =
+
+* Add a manual syncing option that allows retroactive syncing within a selected date range
+* Fixed bug where SSO avatar URLs were malformed (Thanks to [klaufel](https://github.com/disqus/disqus-wordpress-plugin/pull/49))
 
 = 3.0.15 =
 

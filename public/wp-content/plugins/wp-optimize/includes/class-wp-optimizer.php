@@ -75,7 +75,7 @@ class WP_Optimizer {
 	}
 	
 	/**
-	 * This method returns an array of available optimisations.
+	 * This method returns an array of available optimizations.
 	 * Each array key is an optimization ID, and the value is an object,
 	 * as returned by get_optimization()
 	 *
@@ -229,6 +229,9 @@ class WP_Optimizer {
 			$option_id = call_user_func(array($optimization, 'get_'.$which_option.'_id'));
 			
 			if (isset($optimization_options[$option_id])) {
+				// if options saved as a string then compare with string (for support different versions)
+				if (is_string($optimization_options[$option_id]) && 'false' === $optimization_options[$option_id]) continue;
+
 				if ('auto' == $which_option && empty($optimization->available_for_auto)) continue;
 
 				$this->change_time_limit();
@@ -258,19 +261,24 @@ class WP_Optimizer {
 	/**
 	 * Returns information about database tables.
 	 *
+	 * @param bool $update refresh or no cached data
+	 *
 	 * @return mixed
 	 */
-	public function get_tables() {
+	public function get_tables($update = false) {
 		static $tables_info = null;
 
-		if (null !== $tables_info) return $tables_info;
+		if (false === $update && null !== $tables_info) return $tables_info;
 
-		$table_status = WP_Optimize()->get_db_info()->get_show_table_status();
+		$table_status = WP_Optimize()->get_db_info()->get_show_table_status($update);
 
 		// Filter on the site's DB prefix (was not done in releases up to 1.9.1).
 		$table_prefix = $this->get_table_prefix();
 		
 		if (is_array($table_status)) {
+
+			$corrupted_tables_count = 0;
+
 			foreach ($table_status as $index => $table) {
 				$table_name = $table->Name;
 				
@@ -278,13 +286,24 @@ class WP_Optimizer {
 				
 				$include_table = apply_filters('wp_optimize_get_tables_include_table', $include_table, $table_name, $table_prefix);
 
+				if (!$include_table) {
+					unset($table_status[$index]);
+					continue;
+				}
+
+				$table_status[$index]->Engine = WP_Optimize()->get_db_info()->get_table_type($table_name);
+
 				$table_status[$index]->is_optimizable = WP_Optimize()->get_db_info()->is_table_optimizable($table_name);
 				$table_status[$index]->is_type_supported = WP_Optimize()->get_db_info()->is_table_type_optimize_supported($table_name);
 				// add information about corrupted tables.
-				$table_status[$index]->is_needing_repair = WP_Optimize()->get_db_info()->is_table_needing_repair($table_name);
+				$is_needing_repair = WP_Optimize()->get_db_info()->is_table_needing_repair($table_name);
+				$table_status[$index]->is_needing_repair = $is_needing_repair;
+				if ($is_needing_repair) $corrupted_tables_count++;
 
-				if (!$include_table) unset($table_status[$index]);
+				$table_status[$index] = $this->join_plugin_information($table_name, $table_status[$index]);
 			}
+
+			WP_Optimize()->get_options()->update_option('corrupted-tables-count', $corrupted_tables_count);
 		}
 
 		$tables_info = apply_filters('wp_optimize_get_tables', $table_status);
@@ -294,18 +313,73 @@ class WP_Optimizer {
 	/**
 	 * Returns information about single table by table name.
 	 *
-	 * @param string $table_name table name
-	 * @return object table information object.
+	 * @param String $table_name table name
+	 * @return Object|Boolean table information object.
 	 */
 	public function get_table($table_name) {
-		$table = WP_Optimize()->get_db_info()->get_table_status($table_name);
+	
+		$db_info = WP_Optimize()->get_db_info();
+	
+		$table = $db_info->get_table_status($table_name);
+		
+		if (false === $table) return false;
 
-		$table->is_optimizable = WP_Optimize()->get_db_info()->is_table_optimizable($table_name);
-		$table->is_type_supported = WP_Optimize()->get_db_info()->is_table_type_optimize_supported($table_name);
-		$table->is_needing_repair = WP_Optimize()->get_db_info()->is_table_needing_repair($table_name);
+		$table->is_optimizable = $db_info->is_table_optimizable($table_name);
+		$table->is_type_supported = $db_info->is_table_type_optimize_supported($table_name);
+		$table->is_needing_repair = $db_info->is_table_needing_repair($table_name);
+
+		// add information about plugins.
+		$table = $this->join_plugin_information($table_name, $table);
 
 		$table = apply_filters('wp_optimize_get_table', $table);
 		return $table;
+	}
+
+	/**
+	 * Add information about relationship database tables with plugins.
+	 *
+	 * @param {string} $table_name
+	 * @param {object} $table_obj
+	 *
+	 * @return {object}
+	 */
+	public function join_plugin_information($table_name, $table_obj) {
+		// set can be removed flag.
+		$can_be_removed = false;
+		// set WP core table flag.
+		$wp_core_table = false;
+		// add information about using table by any of installed plugins.
+		$table_obj->is_using = WP_Optimize()->get_db_info()->is_table_using_by_plugin($table_name);
+		// if table belongs to any plugin then add plugins status.
+		$plugins = WP_Optimize()->get_db_info()->get_table_plugin($table_name);
+
+		if (false !== $plugins) {
+			// if belongs to any of plugin then we can remove table if plugin not active.
+			$can_be_removed = true;
+
+			$plugin_status = array();
+			foreach ($plugins as $plugin) {
+				$status = WP_Optimize()->get_db_info()->get_plugin_status($plugin);
+
+				if (__('WordPress core', 'wp-optimize') == $plugin) $wp_core_table = true;
+				// if plugin is active then we can't remove.
+				if ($wp_core_table || $status['active']) $can_be_removed = false;
+
+				if ($status['installed'] || $status['active'] || !$table_obj->is_using) {
+					$plugin_status[] = array(
+						'plugin' => $plugin,
+						'status' => $status,
+					);
+				}
+			}
+
+			$table_obj->plugin_status = $plugin_status;
+		}
+
+		$table_obj->wp_core_table = $wp_core_table;
+		$table_obj->can_be_removed = $can_be_removed;
+
+		return $table_obj;
 	}
 
 	/**
@@ -313,7 +387,7 @@ class WP_Optimizer {
 	 * and information regarding each table and returns
 	 * the results to optimizations-table.php and optimizationstable.php
 	 *
-	 * @return [array] an array of data such as table list, innodb info and data free
+	 * @return Array - an array of data such as table list, innodb info and data free
 	 */
 	public function get_table_information() {
 		// Get table information.
@@ -362,7 +436,7 @@ class WP_Optimizer {
 	
 		$wpdb = $GLOBALS['wpdb'];
 		
-		$new_status = (($enable) ? 'open' : 'closed');
+		$new_status = $enable ? 'open' : 'closed';
 		
 		switch ($type) {
 			case "trackbacks":
@@ -432,7 +506,6 @@ class WP_Optimizer {
 		$total_now = strval($previously_saved + $converted_current);
 
 		$options->update_option('total-cleaned', $total_now);
-		$options->update_option('current-cleaned', $current);
 
 		return $total_now;
 	}

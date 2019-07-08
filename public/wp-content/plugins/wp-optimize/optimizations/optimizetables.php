@@ -24,6 +24,8 @@ class WP_Optimization_optimizetables extends WP_Optimization {
 
 	public $run_multisite = false;
 
+	public $support_preview = false;
+
 	/**
 	 * Run optimization.
 	 */
@@ -35,7 +37,38 @@ class WP_Optimization_optimizetables extends WP_Optimization {
 		if (isset($this->data['optimization_table']) && '' != $this->data['optimization_table']) {
 			$table = $this->optimizer->get_table($this->data['optimization_table']);
 
-			$this->optimize_table($table, $force);
+			if (false !== $table) {
+				$this->optimize_table($table, $force);
+
+				$wp_optimize = WP_Optimize();
+				$tablestatus = $wp_optimize->get_db_info()->get_table_status($table->Name, true);
+
+				$is_optimizable = $wp_optimize->get_db_info()->is_table_optimizable($table->Name);
+
+				$tableinfo = array(
+					'rows' => number_format_i18n($tablestatus->Rows),
+					'data_size' => $wp_optimize->format_size($tablestatus->Data_length),
+					'index_size' => $wp_optimize->format_size($tablestatus->Index_length),
+					'overhead' => $is_optimizable ? $wp_optimize->format_size($tablestatus->Data_free) : '-',
+					'type' => $table->Engine,
+					'is_optimizable' => $is_optimizable,
+				);
+
+				$this->register_meta('tableinfo', $tableinfo);
+
+				$tables = $this->optimizer->get_tables(true);
+
+				$overhead_usage = 0;
+
+				foreach ($tables as $table) {
+					if ($table->is_optimizable) {
+						$overhead_usage += $table->Data_free;
+					}
+				}
+
+				$this->register_meta('overhead', $overhead_usage);
+				$this->register_meta('overhead_formatted', $wp_optimize->format_size($overhead_usage));
+			}
 		} else {
 			$tables = $this->optimizer->get_tables();
 
@@ -58,9 +91,12 @@ class WP_Optimization_optimizetables extends WP_Optimization {
 
 		if ($table_obj->is_type_supported) {
 			$this->logger->info('Optimizing: ' . $table_obj->Name);
-			$this->query('OPTIMIZE TABLE ' . $table_obj->Name);
+			$this->query('OPTIMIZE TABLE `' . $table_obj->Name . '`');
 
-			$this->optimizer->update_total_cleaned(strval($table_obj->Data_free));
+			// For InnoDB Data_free doesn't contain free size.
+			if ('InnoDB' != $table_obj->Engine) {
+				$this->optimizer->update_total_cleaned(strval($table_obj->Data_free));
+			}
 
 			$this->register_output(__('Optimizing Table:', 'wp-optimize') . ' ' . $table_obj->Name);
 		}
@@ -88,7 +124,7 @@ class WP_Optimization_optimizetables extends WP_Optimization {
 					$this->register_output(sprintf(__('Other tables will be optimized (%s).', 'wp-optimize'), $tablesstatus['non_inno_db_tables']));
 				}
 
-				$faq_url = apply_filters('wpo_faq_url', 'https://wordpress.org/plugins/wp-optimize/#faq');
+				$faq_url = apply_filters('wpo_faq_url', 'https://getwpo.com/faqs/');
 				$force_db_option = $this->options->get_option('innodb-force-optimize', 'false');
 				$this->register_output('<input id="innodb_force_optimize" name="innodb-force-optimize" type="checkbox" value="true" '.checked($force_db_option, 'true').'><label for="innodb_force_optimize">'.__('Optimize InnoDB tables anyway.', 'wp-optimize').'</label><br><a href="'.$faq_url.'" target="_blank">'.__('Warning: you should read the FAQ on the risks of this operation first.', 'wp-optimize').'</a>');
 			}

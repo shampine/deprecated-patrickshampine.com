@@ -24,11 +24,11 @@ class WP_Optimize_Options {
 	 *
 	 * @return string
 	 */
-	public function admin_page_url() {
+	public function admin_page_url($page = 'WP-Optimize') {
 		if (is_multisite()) {
-			return network_admin_url('admin.php?page=WP-Optimize');
+			return network_admin_url('admin.php?page='.$page);
 		} else {
-			return admin_url('admin.php?page=WP-Optimize');
+			return admin_url('admin.php?page='.$page);
 		}
 	}
 
@@ -145,7 +145,7 @@ class WP_Optimize_Options {
 	}
 
 	/**
-	 * Save option which sites to optimize in multi-site mode
+	 * Save option which sites to optimize in multisite mode
 	 *
 	 * @param array $settings array of blog ids or "all" item for all sites.
 	 * @return bool
@@ -155,7 +155,7 @@ class WP_Optimize_Options {
 	}
 
 	/**
-	 * Return list of blog ids to optimize in multi-site mode
+	 * Return list of blog ids to optimize in multisite mode
 	 *
 	 * @return mixed|void
 	 */
@@ -228,8 +228,11 @@ class WP_Optimize_Options {
 		}
 
 		/** Save logging options */
-		$this->update_option('logging', $settings['wpo-logger-type']);
-		$this->update_option('logging-additional', $settings['wpo-logger-options']);
+		$logger_type = isset($settings['wpo-logger-type']) ? $settings['wpo-logger-type'] : '';
+		$logger_options = isset($settings['wpo-logger-options']) ? $settings['wpo-logger-options'] : '';
+		
+		$this->update_option('logging', $logger_type);
+		$this->update_option('logging-additional', $logger_options);
 
 		// Save selected optimization settings.
 		$this->save_sent_manual_run_optimization_options($settings, true, false);
@@ -280,6 +283,23 @@ class WP_Optimize_Options {
 			$this->update_option('auto', $new_auto_options);
 		}
 
+	}
+
+	/**
+	 * Save lazy load settings
+	 *
+	 * @param array $settings
+	 * @return bool
+	 */
+	public function save_lazy_load_settings($settings) {
+		/** Save Lazy Load settings */
+		if (isset($settings['lazyload'])) {
+			$this->update_option('lazyload', $settings['lazyload']);
+		} else {
+			$this->update_option('lazyload', array());
+		}
+
+		return true;
 	}
 
 	/**
